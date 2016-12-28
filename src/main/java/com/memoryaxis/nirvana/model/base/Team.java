@@ -28,4 +28,11 @@ public class Team {
     public void setPeoples(Map<Position, People> peoples) {
         this.peoples = peoples;
     }
+
+    // ---
+
+    public boolean isOver() {
+        return peoples.isEmpty();
+    }
+
 }

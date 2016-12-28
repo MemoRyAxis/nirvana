@@ -31,7 +31,8 @@ public enum Position {
 
     // FIXME: 12/26/2016
     public static Position[] getPositionSeq(Position currentPosition) {
-        if (currentPosition.equals(R1_LEFT)) return values();
+        if (currentPosition == null ||
+                currentPosition.equals(R1_LEFT)) return values();
 
         int cursor = 0;
         Position[] seq = new Position[values().length];
@@ -46,6 +47,10 @@ public enum Position {
             }
         }
         return seq;
+    }
+
+    public static Position[] getPositionSeq() {
+        return values();
     }
 
 }

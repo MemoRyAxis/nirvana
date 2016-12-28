@@ -9,11 +9,17 @@ import com.memoryaxis.nirvana.model.base.Team;
 public class SimpleAttack extends PhysicalAttack {
 
     public void action(Team a, Team b) throws Exception {
-        People people = a.getPeoples().getOrDefault(a.getCurrentActionPosition(), null);
+        People pa = a.getPeoples().get(a.getCurrentActionPosition());
 
-        if (people == null) return;
+        if (pa == null) return;
 
-        doAttack(people, b.getPeoples().get(getTargetPosition(a, b)));
+        People pb = b.getPeoples().get(getTargetPosition(a, b));
+
+        attack(pa, pb);
+
+        if (pb.getHp() < 1) {
+            b.getPeoples().remove(getTargetPosition(a, b));
+        }
     }
 
 }
