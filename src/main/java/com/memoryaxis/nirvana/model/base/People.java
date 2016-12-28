@@ -1,8 +1,7 @@
 package com.memoryaxis.nirvana.model.base;
 
 import com.memoryaxis.nirvana.model.action.Action;
-import com.memoryaxis.nirvana.model.buff.Buff;
-import com.memoryaxis.nirvana.model.buff.Debuff;
+import com.memoryaxis.nirvana.model.base.buff.Buff;
 
 import java.util.Set;
 
@@ -11,8 +10,14 @@ import java.util.Set;
  */
 public class People {
 
+    // fullHealthPoint
+    private Integer fhp;
+
     // healthPoint
     private Integer hp;
+
+    // fullMagicPoint
+    private Integer fmp;
 
     // magicPoint
     private Integer mp;
@@ -55,15 +60,27 @@ public class People {
     // magicDefense
     private Integer md;
 
-    private Set<Buff> buffs;
-
-    private Set<Debuff> debuffs;
-
-
     private Action baseAction;
 
     private Action superAction;
 
+    private Set<Buff> buffs;
+
+    public Integer getFhp() {
+        return fhp;
+    }
+
+    public void setFhp(Integer fhp) {
+        this.fhp = fhp;
+    }
+
+    public Integer getFmp() {
+        return fmp;
+    }
+
+    public void setFmp(Integer fmp) {
+        this.fmp = fmp;
+    }
 
     public Integer getHp() {
         return hp;
@@ -169,22 +186,6 @@ public class People {
         this.md = md;
     }
 
-    public Set<Buff> getBuffs() {
-        return buffs;
-    }
-
-    public void setBuffs(Set<Buff> buffs) {
-        this.buffs = buffs;
-    }
-
-    public Set<Debuff> getDebuffs() {
-        return debuffs;
-    }
-
-    public void setDebuffs(Set<Debuff> debuffs) {
-        this.debuffs = debuffs;
-    }
-
     public Action getBaseAction() {
         return baseAction;
     }
@@ -199,6 +200,14 @@ public class People {
 
     public void setSuperAction(Action superAction) {
         this.superAction = superAction;
+    }
+
+    public Set<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public void setBuffs(Set<Buff> buffs) {
+        this.buffs = buffs;
     }
 
 }

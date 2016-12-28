@@ -7,6 +7,6 @@ import com.memoryaxis.nirvana.model.base.Team;
  */
 public interface Battle {
 
-    void start(Team a, Team b);
+    void start(Team a, Team b) throws Exception;
 
 }

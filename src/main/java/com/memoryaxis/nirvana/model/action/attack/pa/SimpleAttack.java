@@ -15,7 +15,7 @@ public class SimpleAttack extends PhysicalAttack {
 
         People pb = b.getPeoples().get(getTargetPosition(a, b));
 
-        attack(pa, pb);
+        doAttack(pa, pb);
 
         if (pb.getHp() < 1) {
             b.getPeoples().remove(getTargetPosition(a, b));

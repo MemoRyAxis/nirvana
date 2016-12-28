@@ -9,7 +9,7 @@ import com.memoryaxis.nirvana.model.base.People;
 public abstract class PhysicalAttack extends Attack {
 
     @Override
-    protected void attack(People p1, People p2) throws Exception {
+    protected void doAttack(People p1, People p2) throws Exception {
 
         Integer damage = p1.getPa();
 

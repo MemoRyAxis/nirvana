@@ -7,6 +7,6 @@ import com.memoryaxis.nirvana.model.base.Team;
  */
 public interface Action {
 
-    public void action(Team a, Team b) throws Exception;
+    void action(Team a, Team b) throws Exception;
 
 }

@@ -10,7 +10,7 @@ import com.memoryaxis.nirvana.model.base.position.Position;
  */
 public abstract class Attack implements Action {
 
-    protected abstract void attack(People p1, People p2) throws Exception;
+    protected abstract void doAttack(People p1, People p2) throws Exception;
 
     protected Position getTargetPosition(Team a, Team b) throws Exception {
         for (Position position : Position.getPositionSeq(a.getCurrentActionPosition())) {
