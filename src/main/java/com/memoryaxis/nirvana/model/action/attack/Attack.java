@@ -13,12 +13,16 @@ public abstract class Attack implements Action {
     protected abstract void doAttack(People p1, People p2) throws Exception;
 
     protected Position getTargetPosition(Team a, Team b) throws Exception {
-        for (Position position : Position.getPositionSeq(a.getCurrentActionPosition())) {
-            if (b.getPeoples().containsKey(position)) {
-                return position;
-            }
+
+        Position position = a.getCurrentActionPosition();
+
+        while (!b.getPeoples().containsKey(position)) {
+            position = position.getNext();
+            if (position.equals(a.getCurrentActionPosition()))
+                throw new Exception("No one in target team!");
         }
-        throw new Exception("Target Team Has No One!");
+
+        return position;
     }
 
 }

@@ -2,6 +2,7 @@ package com.memoryaxis.nirvana.model.base;
 
 import com.memoryaxis.nirvana.model.base.position.Position;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -11,7 +12,7 @@ public class Team {
 
     private Position currentActionPosition = Position.R1_LEFT;
 
-    private Map<Position, People> peoples;
+    private Map<Position, People> peoples = new HashMap<>();
 
     public Position getCurrentActionPosition() {
         return currentActionPosition;

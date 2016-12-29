@@ -1,12 +1,12 @@
 package com.memoryaxis.nirvana.model.logic;
 
-import com.memoryaxis.nirvana.model.action.attack.pa.SimpleAttack;
-import com.memoryaxis.nirvana.model.action.treat.tr.AllTreat;
 import com.memoryaxis.nirvana.model.base.People;
 import com.memoryaxis.nirvana.model.base.Team;
 import com.memoryaxis.nirvana.model.base.position.Position;
 
-import java.util.HashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 /**
@@ -14,27 +14,44 @@ import java.util.Map;
  */
 public class PVP implements Battle {
 
+    private static final Logger log = LoggerFactory.getLogger(PVP.class);
+
+    private Team a;
+
+    private Team b;
+
+    private boolean isStarted = false;
+
+    public PVP setA(Team a) {
+        this.a = a;
+        return this;
+    }
+
+    public PVP setB(Team b) {
+        this.b = b;
+        return this;
+    }
+
     private void printLog(Team a) {
         for (Map.Entry<Position, People> entry : a.getPeoples().entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue().getHp());
+            log.info(entry.getKey() + ": " + entry.getValue().getHp());
         }
     }
 
-    @Override
-    public void start(Team a, Team b) throws Exception {
+    private void start(Team a, Team b) throws Exception {
 
         Integer round = 0;
 
         while (!a.isOver()
                 && !b.isOver()) {
 
-            System.out.println("--- round: " + round + " start ---");
-            System.out.println("Team a: ");
+            log.info("--- round: " + round + " start ---");
+            log.info("Team a: ");
             printLog(a);
-            System.out.println("---");
-            System.out.println("Team b: ");
+            log.info("---");
+            log.info("Team b: ");
             printLog(b);
-            System.out.println("--- round: " + round + " end ---\n");
+            log.info("--- round: " + round + " end ---\n");
             Thread.sleep(1000);
 
             round++;
@@ -46,11 +63,22 @@ public class PVP implements Battle {
                 try {
                     People pa = a.getPeoples().get(position);
                     if (pa != null) {
-                        pa.getBaseAction().action(a, b);
+                        if (pa.getAp() != null && pa.getAp() > 100) {
+                            pa.getSuperAction().action(a, b);
+                            pa.setAp(pa.getAp() - 100);
+                        } else {
+                            pa.getBaseAction().action(a, b);
+                        }
                     }
+
                     People pb = b.getPeoples().get(position);
                     if (pb != null) {
-                        pb.getBaseAction().action(b, a);
+                        if (pb.getAp() != null && pb.getAp() > 100) {
+                            pb.getSuperAction().action(a, b);
+                            pb.setAp(pb.getAp() - 100);
+                        } else {
+                            pb.getBaseAction().action(b, a);
+                        }
                     }
 
                 } catch (Exception e) {
@@ -60,46 +88,44 @@ public class PVP implements Battle {
         }
 
         if (b.isOver()) {
-            System.out.println("Team a win!");
+            log.info("Team a win!");
         }
 
         if (a.isOver()) {
-            System.out.println("Team b win!");
+            log.info("Team b win!");
         }
 
     }
 
-    public static void main(String[] args) throws Exception {
-        People pa = new People();
-        pa.setHp(90);
-        pa.setFhp(90);
-        pa.setPa(30);
-        pa.setBaseAction(new SimpleAttack());
+    @Override
+    public void ready() {
+        // print log
+        // team skill
+        // etc.
+    }
 
-        People pat = new People();
-        pat.setMa(10);
-        pat.setHp(90);
-        pat.setFhp(90);
-        pat.setBaseAction(new AllTreat());
+    @Override
+    public void start() {
+        try {
+            if (a == null || b == null)
+                throw new Exception("Start PVP fail!");
 
-        People pb = new People();
-        pb.setHp(120);
-        pb.setPa(30);
-        pb.setBaseAction(new SimpleAttack());
+            this.start(this.a, this.b);
+            this.isStarted = true;
+        } catch (Exception e) {
+            log.error("Start PVP fail!", e);
+        }
+    }
 
-        Team a = new Team();
-        Map<Position, People> aMap = new HashMap<>(1);
-        aMap.put(Position.R1_LEFT, pa);
-        aMap.put(Position.R2_RIGHT, pat);
-        a.setPeoples(aMap);
+    @Override
+    public void over() {
+        this.isStarted = false;
+        // print log
+    }
 
-        Team b = new Team();
-        Map<Position, People> bMap = new HashMap<>(1);
-        bMap.put(Position.R1_LEFT, pb);
-        b.setPeoples(bMap);
-
-        new PVP().start(a, b);
-
+    @Override
+    public boolean isStarted() {
+        return this.isStarted;
     }
 
 }

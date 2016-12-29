@@ -3,12 +3,23 @@ package com.memoryaxis.nirvana.model.base;
 import com.memoryaxis.nirvana.model.action.Action;
 import com.memoryaxis.nirvana.model.base.buff.Buff;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  * Created by mz on 12/24/2016.
  */
-public class People {
+public class People implements Cloneable, Serializable {
+
+    private static int ID = 1;
+
+    private String getId() {
+        return String.valueOf(ID++);
+    }
+
+    // ---
+
+    private String name = getId();
 
     // fullHealthPoint
     private Integer fhp;
@@ -23,14 +34,14 @@ public class People {
     private Integer mp;
 
     // attachPoint
-    private Integer ap;
+    private Integer ap = 0;
 
 
     // physicalAttack
-    private Integer pa;
+    private Integer pa = 0;
 
     // magicAttack
-    private Integer ma;
+    private Integer ma = 0;
 
 
     // hitRate
@@ -70,144 +81,171 @@ public class People {
         return fhp;
     }
 
-    public void setFhp(Integer fhp) {
+    public People setFhp(Integer fhp) {
         this.fhp = fhp;
+        return this;
     }
 
     public Integer getFmp() {
         return fmp;
     }
 
-    public void setFmp(Integer fmp) {
+    public People setFmp(Integer fmp) {
         this.fmp = fmp;
+        return this;
     }
 
     public Integer getHp() {
         return hp;
     }
 
-    public void setHp(Integer hp) {
+    public People setHp(Integer hp) {
         this.hp = hp;
+        return this;
     }
 
     public Integer getMp() {
         return mp;
     }
 
-    public void setMp(Integer mp) {
+    public People setMp(Integer mp) {
         this.mp = mp;
+        return this;
     }
 
     public Integer getAp() {
         return ap;
     }
 
-    public void setAp(Integer ap) {
+    public People setAp(Integer ap) {
         this.ap = ap;
+        return this;
     }
 
     public Integer getPa() {
         return pa;
     }
 
-    public void setPa(Integer pa) {
+    public People setPa(Integer pa) {
         this.pa = pa;
+        return this;
     }
 
     public Integer getMa() {
         return ma;
     }
 
-    public void setMa(Integer ma) {
+    public People setMa(Integer ma) {
         this.ma = ma;
+        return this;
     }
 
     public Integer getHr() {
         return hr;
     }
 
-    public void setHr(Integer hr) {
+    public People setHr(Integer hr) {
         this.hr = hr;
+        return this;
     }
 
     public Integer getPr() {
         return pr;
     }
 
-    public void setPr(Integer pr) {
+    public People setPr(Integer pr) {
         this.pr = pr;
+        return this;
     }
 
     public Integer getPkr() {
         return pkr;
     }
 
-    public void setPkr(Integer pkr) {
+    public People setPkr(Integer pkr) {
         this.pkr = pkr;
+        return this;
     }
 
     public Integer getMkr() {
         return mkr;
     }
 
-    public void setMkr(Integer mkr) {
+    public People setMkr(Integer mkr) {
         this.mkr = mkr;
+        return this;
     }
 
     public Integer getPas() {
         return pas;
     }
 
-    public void setPas(Integer pas) {
+    public People setPas(Integer pas) {
         this.pas = pas;
+        return this;
     }
 
     public Integer getMas() {
         return mas;
     }
 
-    public void setMas(Integer mas) {
+    public People setMas(Integer mas) {
         this.mas = mas;
+        return this;
     }
 
     public Integer getPd() {
         return pd;
     }
 
-    public void setPd(Integer pd) {
+    public People setPd(Integer pd) {
         this.pd = pd;
+        return this;
     }
 
     public Integer getMd() {
         return md;
     }
 
-    public void setMd(Integer md) {
+    public People setMd(Integer md) {
         this.md = md;
+        return this;
     }
 
     public Action getBaseAction() {
         return baseAction;
     }
 
-    public void setBaseAction(Action baseAction) {
+    public People setBaseAction(Action baseAction) {
         this.baseAction = baseAction;
+        return this;
     }
 
     public Action getSuperAction() {
         return superAction;
     }
 
-    public void setSuperAction(Action superAction) {
+    public People setSuperAction(Action superAction) {
         this.superAction = superAction;
+        return this;
     }
 
     public Set<Buff> getBuffs() {
         return buffs;
     }
 
-    public void setBuffs(Set<Buff> buffs) {
+    public People setBuffs(Set<Buff> buffs) {
         this.buffs = buffs;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public People setName(String name) {
+        this.name = name;
+        return this;
     }
 
 }
