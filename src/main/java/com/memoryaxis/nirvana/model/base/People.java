@@ -4,6 +4,9 @@ import com.memoryaxis.nirvana.model.action.Action;
 import com.memoryaxis.nirvana.model.base.buff.Buff;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -69,7 +72,7 @@ public class People implements Cloneable, Serializable {
 
     private Action superAction;
 
-    private Set<Buff> buffs;
+    private List<Buff> buffs = new ArrayList<>();
 
     public People(String name) {
         this.name = name;
@@ -228,13 +231,12 @@ public class People implements Cloneable, Serializable {
         return this;
     }
 
-    public Set<Buff> getBuffs() {
+    public List<Buff> getBuffs() {
         return buffs;
     }
 
-    public People setBuffs(Set<Buff> buffs) {
+    public void setBuffs(List<Buff> buffs) {
         this.buffs = buffs;
-        return this;
     }
 
     public String getName() {

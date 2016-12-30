@@ -2,6 +2,7 @@ package com.memoryaxis.nirvana;
 
 import com.memoryaxis.nirvana.model.action.attack.pa.AllAttack;
 import com.memoryaxis.nirvana.model.action.attack.pa.SimpleAttack;
+import com.memoryaxis.nirvana.model.action.buff.bu.PhysicalAttackBuffs;
 import com.memoryaxis.nirvana.model.action.treat.tr.AllTreat;
 import com.memoryaxis.nirvana.model.action.treat.tr.MinTreat;
 import com.memoryaxis.nirvana.model.base.People;
@@ -19,13 +20,15 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         People pa = new People("pa")
-                .setHp(100)
-                .setFhp(100)
+                .setHp(300)
+                .setFhp(300)
 
                 .setPa(30)
+                .setMa(3)
 
                 .setBaseAction(new SimpleAttack())
-                .setSuperAction(new AllAttack());
+                .setSuperAction(new PhysicalAttackBuffs());
+//                .setSuperAction(new AllAttack());
 
         People pat = new People("pat")
                 .setHp(100)

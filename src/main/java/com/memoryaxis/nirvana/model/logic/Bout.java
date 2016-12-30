@@ -2,6 +2,8 @@ package com.memoryaxis.nirvana.model.logic;
 
 import com.memoryaxis.nirvana.model.base.People;
 import com.memoryaxis.nirvana.model.base.Team;
+import com.memoryaxis.nirvana.model.base.buff.Aspect;
+import com.memoryaxis.nirvana.model.base.buff.Buff;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,15 @@ public class Bout implements Lifecycle {
     public void ready() {
         // print log
         // buffs
+        for (Buff buff : currentPeople.getBuffs()) {
+            if (buff.getAspect().equals(Aspect.BOUT_READY)) {
+                try {
+                    buff.effect(currentPeople);
+                } catch (Exception e) {
+                    log.error("Add Buff Error!", e);
+                }
+            }
+        }
         // etc.
     }
 

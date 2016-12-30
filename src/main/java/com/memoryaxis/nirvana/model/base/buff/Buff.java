@@ -1,10 +1,36 @@
 package com.memoryaxis.nirvana.model.base.buff;
 
-/**
- * Created by mz on 12/28/2016.
- */
-public class Buff {
+import com.memoryaxis.nirvana.model.base.People;
 
-    protected Integer duration;
+/**
+ * @author memoryaxis@gmail.com
+ */
+public abstract class Buff {
+
+    private Aspect aspect;
+
+    private Integer duration;
+
+    private Integer effectValue;
+
+    Buff(Aspect aspect, Integer duration, Integer effectValue) {
+        this.aspect = aspect;
+        this.duration = duration;
+        this.effectValue = effectValue;
+    }
+
+    public Aspect getAspect() {
+        return aspect;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    Integer getEffectValue() {
+        return effectValue;
+    }
+
+    public abstract void effect(People p) throws Exception;
 
 }
