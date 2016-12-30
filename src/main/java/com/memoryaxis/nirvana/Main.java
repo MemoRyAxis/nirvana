@@ -18,7 +18,7 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        People pa = new People()
+        People pa = new People("pa")
                 .setHp(100)
                 .setFhp(100)
 
@@ -27,7 +27,7 @@ public class Main {
                 .setBaseAction(new SimpleAttack())
                 .setSuperAction(new AllAttack());
 
-        People pat = new People()
+        People pat = new People("pat")
                 .setHp(100)
                 .setFhp(100)
 
@@ -36,7 +36,7 @@ public class Main {
                 .setBaseAction(new AllTreat())
                 .setSuperAction(new MinTreat());
 
-        People pb = new People()
+        People pb = new People("pb")
                 .setHp(120)
                 .setFhp(120)
 
@@ -45,7 +45,7 @@ public class Main {
                 .setBaseAction(new SimpleAttack())
                 .setSuperAction(new AllAttack());
 
-        People pb2 = new People()
+        People pb2 = new People("pb2")
                 .setHp(1000)
                 .setFhp(1000)
 

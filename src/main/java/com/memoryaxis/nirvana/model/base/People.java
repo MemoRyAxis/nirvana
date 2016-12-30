@@ -11,13 +11,7 @@ import java.util.Set;
  */
 public class People implements Cloneable, Serializable {
 
-    private static int ID = 1;
-
-    private String getId() {
-        return String.valueOf(ID++);
-    }
-
-    private String name = getId();
+    private final String name;
 
     // ---
 
@@ -76,6 +70,10 @@ public class People implements Cloneable, Serializable {
     private Action superAction;
 
     private Set<Buff> buffs;
+
+    public People(String name) {
+        this.name = name;
+    }
 
     public Integer getFhp() {
         return fhp;
@@ -241,11 +239,6 @@ public class People implements Cloneable, Serializable {
 
     public String getName() {
         return name;
-    }
-
-    public People setName(String name) {
-        this.name = name;
-        return this;
     }
 
 }

@@ -49,8 +49,11 @@ public class Team {
 
     public void printInfo() {
         log.info("Team {} Info: ", this.name);
-        for (Map.Entry<Position, People> entry : this.getPeoples().entrySet()) {
-            log.info(entry.getKey() + ": " + entry.getValue().getHp());
+        for (Position position : Position.getPositionSeq()) {
+            if (this.getPeoples().containsKey(position)) {
+                People people = this.getPeoples().get(position);
+                log.info("\t{}({}): {}", people.getName(), position, people.getHp());
+            }
         }
     }
 

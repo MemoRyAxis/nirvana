@@ -54,13 +54,17 @@ public class Round implements Lifecycle {
 
             // TODO: 12/30/2016 Attack Speed
             for (Position position : Position.getPositionSeq()) {
-                for (Team team : new Team[]{a, b}) {
-                    People p = team.getPeoples().get(position);
+                for (Team[] teamPair : new Team[][]{{a, b}, {b, a}}) {
+                    Team attackTeam = teamPair[0];
+                    Team defenceTeam = teamPair[1];
+
+                    People p = attackTeam.getPeoples().get(position);
+                    attackTeam.setCurrentActionPosition(position);
                     if (p != null) {
                         Bout bout = new Bout()
                                 .setCurrentPeople(p)
-                                .setA(a)
-                                .setB(b);
+                                .setA(attackTeam)
+                                .setB(defenceTeam);
                         bout.ready();
                         bout.start();
                         bout.over();
