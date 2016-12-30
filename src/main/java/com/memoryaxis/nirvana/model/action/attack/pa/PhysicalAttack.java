@@ -18,14 +18,14 @@ public abstract class PhysicalAttack extends Attack {
 
         Integer damage = p1.getPa();
 
-        Integer p2hp = p2.getHp() - damage;
+        Integer p2hpBefore = p2.getHp();
 
-        log.debug("人员[{}]对人员[{}]造成{}点伤害", p1.getName(), p2.getName(), damage);
+        p2.decreaseHp(damage);
 
-        p2.setHp(p2hp);
+        log.debug("人员[{}]对人员[{}]造成{}点伤害", p1.getName(), p2.getName(), p2hpBefore - p2.getHp());
 
-        if (p2.getHp() > 0) {
-            p2.setAp(p2.getAp() + 30);
+        if (p2.isAlive()) {
+            p2.increaseAp(30);
             log.debug("人员[{}]回复{}点怒气", p2.getName(), 30);
         } else {
             log.debug("人员[{}]把人员[{}]带走", p1.getName(), p2.getName());

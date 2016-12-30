@@ -2,19 +2,19 @@ package com.memoryaxis.nirvana.model.base;
 
 import com.memoryaxis.nirvana.model.action.Action;
 import com.memoryaxis.nirvana.model.base.buff.Buff;
+import com.memoryaxis.nirvana.model.reflection.Reflection;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author memoryaxis@gmail.com
  */
-public class People implements Cloneable, Serializable {
+public class People {
 
     private final String name;
+
+    private boolean isAlive = true;
 
     // ---
 
@@ -25,10 +25,10 @@ public class People implements Cloneable, Serializable {
     private Integer hp;
 
     // fullMagicPoint
-    private Integer fmp;
+//    private Integer fmp;
 
     // magicPoint
-    private Integer mp;
+//    private Integer mp;
 
     // attachPoint
     private Integer ap = 0;
@@ -42,35 +42,39 @@ public class People implements Cloneable, Serializable {
 
 
     // hitRate
-    private Integer hr;
+//    private Integer hr;
 
     // parryRate
-    private Integer pr;
+//    private Integer pr;
 
 
     // physicalKnockRate
-    private Integer pkr;
+//    private Integer pkr;
 
     // magicKnockRate
-    private Integer mkr;
+//    private Integer mkr;
 
 
     // physicalAttackSpeed
-    private Integer pas;
+//    private Integer pas;
 
     // magicAttackSpeed
-    private Integer mas;
+//    private Integer mas;
 
 
     // physicalDefense
-    private Integer pd;
+//    private Integer pd;
 
     // magicDefense
-    private Integer md;
+//    private Integer md;
 
     private Action baseAction;
 
     private Action superAction;
+
+    private Reflection onHpIncrease;
+
+    private Reflection onHpDecrease;
 
     private List<Buff> buffs = new ArrayList<>();
 
@@ -87,15 +91,6 @@ public class People implements Cloneable, Serializable {
         return this;
     }
 
-    public Integer getFmp() {
-        return fmp;
-    }
-
-    public People setFmp(Integer fmp) {
-        this.fmp = fmp;
-        return this;
-    }
-
     public Integer getHp() {
         return hp;
     }
@@ -105,13 +100,23 @@ public class People implements Cloneable, Serializable {
         return this;
     }
 
-    public Integer getMp() {
-        return mp;
+    public void increaseHp(Integer hp) {
+        Integer afterHp = this.hp + hp;
+        this.hp = Integer.min(afterHp, this.fhp);
+        // FIXME: 12/31/2016 
+        // onHpIncrease.reflection();
     }
 
-    public People setMp(Integer mp) {
-        this.mp = mp;
-        return this;
+    public void decreaseHp(Integer hp) {
+        Integer afterHp = this.hp - hp;
+        if (afterHp < 1) {
+            this.hp = 0;
+            isAlive = false;
+        } else {
+            this.hp = afterHp;
+            // FIXME: 12/31/2016
+            // onHpDecrease.reflection();
+        }
     }
 
     public Integer getAp() {
@@ -121,6 +126,14 @@ public class People implements Cloneable, Serializable {
     public People setAp(Integer ap) {
         this.ap = ap;
         return this;
+    }
+
+    public void increaseAp(Integer ap) {
+        this.ap += ap;
+    }
+
+    public void decreaseAp(Integer ap) {
+        this.ap -= ap;
     }
 
     public Integer getPa() {
@@ -138,78 +151,6 @@ public class People implements Cloneable, Serializable {
 
     public People setMa(Integer ma) {
         this.ma = ma;
-        return this;
-    }
-
-    public Integer getHr() {
-        return hr;
-    }
-
-    public People setHr(Integer hr) {
-        this.hr = hr;
-        return this;
-    }
-
-    public Integer getPr() {
-        return pr;
-    }
-
-    public People setPr(Integer pr) {
-        this.pr = pr;
-        return this;
-    }
-
-    public Integer getPkr() {
-        return pkr;
-    }
-
-    public People setPkr(Integer pkr) {
-        this.pkr = pkr;
-        return this;
-    }
-
-    public Integer getMkr() {
-        return mkr;
-    }
-
-    public People setMkr(Integer mkr) {
-        this.mkr = mkr;
-        return this;
-    }
-
-    public Integer getPas() {
-        return pas;
-    }
-
-    public People setPas(Integer pas) {
-        this.pas = pas;
-        return this;
-    }
-
-    public Integer getMas() {
-        return mas;
-    }
-
-    public People setMas(Integer mas) {
-        this.mas = mas;
-        return this;
-    }
-
-    public Integer getPd() {
-        return pd;
-    }
-
-    public People setPd(Integer pd) {
-        this.pd = pd;
-        return this;
-    }
-
-    public Integer getMd() {
-        return md;
-    }
-
-    public People setMd(Integer md) {
-        this.md = md;
         return this;
     }
 
@@ -235,12 +176,35 @@ public class People implements Cloneable, Serializable {
         return buffs;
     }
 
-    public void setBuffs(List<Buff> buffs) {
+    public People setBuffs(List<Buff> buffs) {
         this.buffs = buffs;
+        return this;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Reflection getOnHpIncrease() {
+        return onHpIncrease;
+    }
+
+    public People setOnHpIncrease(Reflection onHpIncrease) {
+        this.onHpIncrease = onHpIncrease;
+        return this;
+    }
+
+    public Reflection getOnHpDecrease() {
+        return onHpDecrease;
+    }
+
+    public People setOnHpDecrease(Reflection onHpDecrease) {
+        this.onHpDecrease = onHpDecrease;
+        return this;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 
 }

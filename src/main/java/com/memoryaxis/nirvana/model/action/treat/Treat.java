@@ -19,9 +19,7 @@ public abstract class Treat implements Action {
 
         Integer p2hpBefore = p2.getHp();
 
-        Integer p2hp = p2.getHp() + hp;
-
-        p2.setHp(Integer.min(p2hp, p2.getFhp()));
+        p2.increaseHp(hp);
 
         log.debug("人员[{}]为人员[{}]回复{}点HP", p1.getName(), p2.getName(), p2.getHp() - p2hpBefore);
 

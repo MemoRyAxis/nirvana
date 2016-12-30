@@ -64,7 +64,7 @@ public class Bout implements Lifecycle {
 
             if (currentPeople.getAp() != null && currentPeople.getAp() > 100) {
                 currentPeople.getSuperAction().action(a, b);
-                currentPeople.setAp(currentPeople.getAp() - 100);
+                currentPeople.decreaseAp(100);
             } else {
                 currentPeople.getBaseAction().action(a, b);
             }
