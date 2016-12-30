@@ -2,6 +2,9 @@ package com.memoryaxis.nirvana.model.base;
 
 import com.memoryaxis.nirvana.model.base.position.Position;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,9 +13,17 @@ import java.util.Map;
  */
 public class Team {
 
+    private static final Logger log = LoggerFactory.getLogger(Team.class);
+
+    private final String name;
+
     private Position currentActionPosition = Position.R1_LEFT;
 
     private Map<Position, People> peoples = new HashMap<>();
+
+    public Team(String name) {
+        this.name = name;
+    }
 
     public Position getCurrentActionPosition() {
         return currentActionPosition;
@@ -34,6 +45,13 @@ public class Team {
 
     public boolean isOver() {
         return peoples.isEmpty();
+    }
+
+    public void printInfo() {
+        log.info("Team {} Info: ", this.name);
+        for (Map.Entry<Position, People> entry : this.getPeoples().entrySet()) {
+            log.info(entry.getKey() + ": " + entry.getValue().getHp());
+        }
     }
 
 }

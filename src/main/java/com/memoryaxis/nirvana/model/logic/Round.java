@@ -2,18 +2,17 @@ package com.memoryaxis.nirvana.model.logic;
 
 import com.memoryaxis.nirvana.model.base.People;
 import com.memoryaxis.nirvana.model.base.Team;
+import com.memoryaxis.nirvana.model.base.position.Position;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by mz on 12/29/2016.
+ * @author memoryaxis@gmail.com
  */
 public class Round implements Lifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(Round.class);
-
-    private People people;
 
     private Team a;
 
@@ -21,8 +20,28 @@ public class Round implements Lifecycle {
 
     private boolean isStarted = false;
 
+    private final int currentRound;
+
+    Round(int currentRound) {
+        this.currentRound = currentRound;
+    }
+
+    public Round setA(Team a) {
+        this.a = a;
+        return this;
+    }
+
+    public Round setB(Team b) {
+        this.b = b;
+        return this;
+    }
+
     @Override
     public void ready() {
+        a.printInfo();
+        b.printInfo();
+        log.info("Round {} Start.", currentRound);
+
         // print log
         // buffs
         // etc.
@@ -30,9 +49,27 @@ public class Round implements Lifecycle {
 
     @Override
     public void start() {
-        // logic
+        try {
+            this.isStarted = true;
 
-        this.isStarted = true;
+            // TODO: 12/30/2016 Attack Speed
+            for (Position position : Position.getPositionSeq()) {
+                for (Team team : new Team[]{a, b}) {
+                    People p = team.getPeoples().get(position);
+                    if (p != null) {
+                        Bout bout = new Bout()
+                                .setCurrentPeople(p)
+                                .setA(a)
+                                .setB(b);
+                        bout.ready();
+                        bout.start();
+                        bout.over();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("Start Round Fail!", e);
+        }
     }
 
     @Override
@@ -42,6 +79,8 @@ public class Round implements Lifecycle {
         // print log
         // people skill
         // buffs
+
+        log.info("Round {} End.\n", currentRound);
     }
 
     @Override

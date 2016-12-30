@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created by mz on 12/24/2016.
+ * @author memoryaxis@gmail.com
  */
 public class People implements Cloneable, Serializable {
 
@@ -17,9 +17,9 @@ public class People implements Cloneable, Serializable {
         return String.valueOf(ID++);
     }
 
-    // ---
-
     private String name = getId();
+
+    // ---
 
     // fullHealthPoint
     private Integer fhp;

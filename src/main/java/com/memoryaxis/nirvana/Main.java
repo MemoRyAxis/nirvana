@@ -7,14 +7,13 @@ import com.memoryaxis.nirvana.model.action.treat.tr.MinTreat;
 import com.memoryaxis.nirvana.model.base.People;
 import com.memoryaxis.nirvana.model.base.Team;
 import com.memoryaxis.nirvana.model.base.position.Position;
-import com.memoryaxis.nirvana.model.logic.PVP;
+import com.memoryaxis.nirvana.model.logic.Battle;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @desc main class
- * @date 24th Dec. 2016
+ * @author memoryaxis@gmail.com
  */
 public class Main {
 
@@ -55,22 +54,24 @@ public class Main {
                 .setBaseAction(new SimpleAttack())
                 .setSuperAction(new AllAttack());
 
-        Team a = new Team();
-        Map<Position, People> aMap = new HashMap<>(1);
+        Team a = new Team("a");
+        Map<Position, People> aMap = new HashMap<>();
         aMap.put(Position.R1_LEFT, pa);
         aMap.put(Position.R2_RIGHT, pat);
         a.setPeoples(aMap);
 
-        Team b = new Team();
-        Map<Position, People> bMap = new HashMap<>(1);
+        Team b = new Team("b");
+        Map<Position, People> bMap = new HashMap<>();
         bMap.put(Position.R1_LEFT, pb);
         bMap.put(Position.R2_RIGHT, pb2);
         b.setPeoples(bMap);
 
-        new PVP().setA(a)
-                .setB(b)
-                .start();
-
+        Battle battle = new Battle()
+                .setA(a)
+                .setB(b);
+        battle.ready();
+        battle.start();
+        battle.over();
     }
 
 }
