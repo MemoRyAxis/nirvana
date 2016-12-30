@@ -1,5 +1,6 @@
 package com.memoryaxis.nirvana.model.logic;
 
+import com.memoryaxis.nirvana.model.action.Action;
 import com.memoryaxis.nirvana.model.base.People;
 import com.memoryaxis.nirvana.model.base.Team;
 import com.memoryaxis.nirvana.model.base.buff.Aspect;
@@ -7,6 +8,9 @@ import com.memoryaxis.nirvana.model.base.buff.Buff;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * @author memoryaxis@gmail.com
@@ -31,6 +35,10 @@ public class Bout implements Lifecycle {
         return this;
     }
 
+    public People getCurrentPeople() {
+        return currentPeople;
+    }
+
     public Bout setA(Team a) {
         this.a = a;
         return this;
@@ -45,16 +53,25 @@ public class Bout implements Lifecycle {
     public void ready() {
         // print log
         // buffs
-        for (Buff buff : currentPeople.getBuffs()) {
-            if (buff.getAspect().equals(Aspect.BOUT_READY)) {
+        buffOn(currentPeople, Aspect.BOUT_READY);
+        // etc.
+    }
+
+    private void buffOn(People currentPeople, Aspect aspect) {
+        ListIterator<Buff> buffs = currentPeople.getBuffs().listIterator();
+        while (buffs.hasNext()) {
+            Buff buff = buffs.next();
+            if (aspect.equals(buff.getAspect())) {
                 try {
                     buff.effect(currentPeople);
                 } catch (Exception e) {
                     log.error("Add Buff Error!", e);
                 }
+                if (!buff.isEffective()) {
+                    buffs.remove();
+                }
             }
         }
-        // etc.
     }
 
     @Override
@@ -62,11 +79,20 @@ public class Bout implements Lifecycle {
         try {
             this.isStarted = true;
 
+            buffOn(currentPeople, Aspect.BOUT_START);
+
             if (currentPeople.getAp() != null && currentPeople.getAp() > 100) {
-                currentPeople.getSuperAction().action(a, b);
+                log.info("[{}]怒击", currentPeople.getName());
+                for (Action action : currentPeople.getSuperActions()) {
+                    action.action(a, b);
+
+                    buffOn(currentPeople, Aspect.AT_ONCE);
+                }
                 currentPeople.decreaseAp(100);
             } else {
-                currentPeople.getBaseAction().action(a, b);
+                for (Action action : currentPeople.getBaseActions()) {
+                    action.action(a, b);
+                }
             }
         } catch (Exception e) {
             log.error("Bout Error!", e);

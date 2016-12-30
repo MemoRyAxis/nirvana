@@ -5,6 +5,8 @@ package com.memoryaxis.nirvana.model.base.buff;
  */
 public enum Aspect {
 
+    AT_ONCE,
+
     BATTLE_READY,
     BATTLE_START,
     ROUND_READY,

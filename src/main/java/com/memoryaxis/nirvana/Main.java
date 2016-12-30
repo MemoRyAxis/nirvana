@@ -9,6 +9,7 @@ import com.memoryaxis.nirvana.model.base.People;
 import com.memoryaxis.nirvana.model.base.Team;
 import com.memoryaxis.nirvana.model.base.position.Position;
 import com.memoryaxis.nirvana.model.logic.Battle;
+import com.memoryaxis.nirvana.model.reflection.gain.DoubleApGain;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +25,12 @@ public class Main {
                 .setFhp(300)
 
                 .setPa(30)
-                .setMa(3)
+                .setMa(7)
 
                 .setBaseAction(new SimpleAttack())
-                .setSuperAction(new PhysicalAttackBuffs());
+                .setSuperAction(new PhysicalAttackBuffs())
+                .setSuperAction(new AllAttack())
+                .setOnApIncrease(new DoubleApGain());
 //                .setSuperAction(new AllAttack());
 
         People pat = new People("pat")
@@ -49,8 +52,8 @@ public class Main {
                 .setSuperAction(new AllAttack());
 
         People pb2 = new People("pb2")
-                .setHp(1000)
-                .setFhp(1000)
+                .setHp(500)
+                .setFhp(500)
 
                 .setPa(50)
 

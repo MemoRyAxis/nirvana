@@ -68,13 +68,21 @@ public class People {
     // magicDefense
 //    private Integer md;
 
-    private Action baseAction;
+    private List<Action> baseActions = new ArrayList<>();
 
-    private Action superAction;
+    private List<Action> superActions = new ArrayList<>();
 
-    private Reflection onHpIncrease;
+    private Reflection onHpIncrease = p -> {
+    };
 
-    private Reflection onHpDecrease;
+    private Reflection onHpDecrease = p -> {
+    };
+
+    private Reflection onApIncrease = p -> {
+    };
+
+    private Reflection onApDecrease = p -> {
+    };
 
     private List<Buff> buffs = new ArrayList<>();
 
@@ -130,6 +138,7 @@ public class People {
 
     public void increaseAp(Integer ap) {
         this.ap += ap;
+        this.onApIncrease.reflection(this);
     }
 
     public void decreaseAp(Integer ap) {
@@ -154,21 +163,21 @@ public class People {
         return this;
     }
 
-    public Action getBaseAction() {
-        return baseAction;
+    public List<Action> getBaseActions() {
+        return baseActions;
+    }
+
+    public List<Action> getSuperActions() {
+        return superActions;
     }
 
     public People setBaseAction(Action baseAction) {
-        this.baseAction = baseAction;
+        this.baseActions.add(baseAction);
         return this;
     }
 
-    public Action getSuperAction() {
-        return superAction;
-    }
-
     public People setSuperAction(Action superAction) {
-        this.superAction = superAction;
+        this.superActions.add(superAction);
         return this;
     }
 
@@ -201,6 +210,24 @@ public class People {
     public People setOnHpDecrease(Reflection onHpDecrease) {
         this.onHpDecrease = onHpDecrease;
         return this;
+    }
+
+    public Reflection getOnApIncrease() {
+        return onApIncrease;
+    }
+
+    public People setOnApIncrease(Reflection onApIncrease) {
+        this.onApIncrease = onApIncrease;
+        return this;
+    }
+
+    public People setOnApDecrease(Reflection onApDecrease) {
+        this.onApDecrease = onApDecrease;
+        return this;
+    }
+
+    public Reflection getOnApDecrease() {
+        return onApDecrease;
     }
 
     public boolean isAlive() {

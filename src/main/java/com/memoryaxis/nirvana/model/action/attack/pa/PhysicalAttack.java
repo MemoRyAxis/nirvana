@@ -25,8 +25,8 @@ public abstract class PhysicalAttack extends Attack {
         log.debug("人员[{}]对人员[{}]造成{}点伤害", p1.getName(), p2.getName(), p2hpBefore - p2.getHp());
 
         if (p2.isAlive()) {
-            p2.increaseAp(30);
             log.debug("人员[{}]回复{}点怒气", p2.getName(), 30);
+            p2.increaseAp(30);
         } else {
             log.debug("人员[{}]把人员[{}]带走", p1.getName(), p2.getName());
         }

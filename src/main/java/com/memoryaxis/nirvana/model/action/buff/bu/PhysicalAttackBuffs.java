@@ -21,8 +21,7 @@ public class PhysicalAttackBuffs extends Buffs {
 
         if (pa == null) return;
 
-        // TODO: 12/30/2016 effect at once
-        Buff buff = new PhysicalAttackBuff(Aspect.BOUT_READY, 1, pa.getMa());
+        Buff buff = new PhysicalAttackBuff(Aspect.AT_ONCE, 0, (int) (pa.getPa() * 0.2));
 
         for (Map.Entry<Position, People> entry : a.getPeoples().entrySet()) {
             addBuff(pa, entry.getValue(), buff);

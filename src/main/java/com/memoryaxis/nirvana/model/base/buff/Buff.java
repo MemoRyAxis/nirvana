@@ -7,9 +7,9 @@ import com.memoryaxis.nirvana.model.base.People;
  */
 public abstract class Buff {
 
-    private Aspect aspect;
+    private Aspect aspect = Aspect.AT_ONCE;
 
-    private Integer duration;
+    private Integer duration = 1;
 
     private Integer effectValue;
 
@@ -23,12 +23,16 @@ public abstract class Buff {
         return aspect;
     }
 
-    public Integer getDuration() {
-        return duration;
-    }
-
     Integer getEffectValue() {
         return effectValue;
+    }
+
+    public boolean isEffective() {
+        return this.duration > 0;
+    }
+
+    protected void decreaseDuration() {
+        this.duration -= 1;
     }
 
     public abstract void effect(People p) throws Exception;
