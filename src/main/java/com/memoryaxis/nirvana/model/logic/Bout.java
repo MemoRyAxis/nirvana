@@ -9,9 +9,6 @@ import com.memoryaxis.nirvana.model.base.buff.Buff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Iterator;
-import java.util.ListIterator;
-
 /**
  * @author memoryaxis@gmail.com
  */
@@ -53,25 +50,8 @@ public class Bout implements Lifecycle {
     public void ready() {
         // print log
         // buffs
-        buffOn(currentPeople, Aspect.BOUT_READY);
+        Buff.buffOn(currentPeople, Aspect.BOUT_READY);
         // etc.
-    }
-
-    private void buffOn(People currentPeople, Aspect aspect) {
-        ListIterator<Buff> buffs = currentPeople.getBuffs().listIterator();
-        while (buffs.hasNext()) {
-            Buff buff = buffs.next();
-            if (aspect.equals(buff.getAspect())) {
-                try {
-                    buff.effect(currentPeople);
-                } catch (Exception e) {
-                    log.error("Add Buff Error!", e);
-                }
-                if (!buff.isEffective()) {
-                    buffs.remove();
-                }
-            }
-        }
     }
 
     @Override
@@ -79,14 +59,14 @@ public class Bout implements Lifecycle {
         try {
             this.isStarted = true;
 
-            buffOn(currentPeople, Aspect.BOUT_START);
+            Buff.buffOn(currentPeople, Aspect.BOUT_START);
 
             if (currentPeople.getAp() != null && currentPeople.getAp() > 100) {
                 log.info("[{}]怒击", currentPeople.getName());
                 for (Action action : currentPeople.getSuperActions()) {
                     action.action(a, b);
 
-                    buffOn(currentPeople, Aspect.AT_ONCE);
+                    Buff.buffOn(currentPeople, Aspect.AT_ONCE);
                 }
                 currentPeople.decreaseAp(100);
             } else {
@@ -101,6 +81,7 @@ public class Bout implements Lifecycle {
 
     @Override
     public void over() {
+        Buff.buffOn(currentPeople, Aspect.BOUT_END);
         this.isStarted = false;
 
         // print log

@@ -40,6 +40,8 @@ public class People {
     // magicAttack
     private Integer ma = 0;
 
+    // specialAttack
+    private Integer sa = 0;
 
     // hitRate
 //    private Integer hr;
@@ -108,20 +110,26 @@ public class People {
         return this;
     }
 
-    public void increaseHp(Integer hp) {
+    public Integer increaseHp(Integer hp) {
+        Integer beforeHp = this.hp;
         Integer afterHp = this.hp + hp;
         this.hp = Integer.min(afterHp, this.fhp);
+
+        return this.getHp() - beforeHp;
         // FIXME: 12/31/2016 
         // onHpIncrease.reflection();
     }
 
-    public void decreaseHp(Integer hp) {
+    public Integer decreaseHp(Integer hp) {
+        Integer beforeHp = this.hp;
         Integer afterHp = this.hp - hp;
         if (afterHp < 1) {
             this.hp = 0;
             isAlive = false;
+            return beforeHp;
         } else {
             this.hp = afterHp;
+            return hp;
             // FIXME: 12/31/2016
             // onHpDecrease.reflection();
         }
@@ -160,6 +168,15 @@ public class People {
 
     public People setMa(Integer ma) {
         this.ma = ma;
+        return this;
+    }
+
+    public Integer getSa() {
+        return sa;
+    }
+
+    public People setSa(Integer sa) {
+        this.sa = sa;
         return this;
     }
 

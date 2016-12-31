@@ -3,6 +3,7 @@ package com.memoryaxis.nirvana;
 import com.memoryaxis.nirvana.model.action.attack.pa.AllAttack;
 import com.memoryaxis.nirvana.model.action.attack.pa.SimpleAttack;
 import com.memoryaxis.nirvana.model.action.buff.bu.PhysicalAttackBuffs;
+import com.memoryaxis.nirvana.model.action.buff.de.AllBleedingBuffs;
 import com.memoryaxis.nirvana.model.action.treat.tr.AllTreat;
 import com.memoryaxis.nirvana.model.action.treat.tr.MinTreat;
 import com.memoryaxis.nirvana.model.base.People;
@@ -26,10 +27,12 @@ public class Main {
 
                 .setPa(30)
                 .setMa(7)
+                .setSa(1)
 
                 .setBaseAction(new SimpleAttack())
                 .setSuperAction(new PhysicalAttackBuffs())
                 .setSuperAction(new AllAttack())
+                .setSuperAction(new AllBleedingBuffs())
                 .setOnApIncrease(new DoubleApGain());
 //                .setSuperAction(new AllAttack());
 
