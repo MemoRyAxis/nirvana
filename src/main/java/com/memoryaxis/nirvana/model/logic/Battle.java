@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author memoryaxis@gmail.com
  */
-public class Battle implements Lifecycle {
+public class Battle implements GameLifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(Battle.class);
 

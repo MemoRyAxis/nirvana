@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author memoryaxis@gmail.com
  */
-public class Round implements Lifecycle {
+public class Round implements GameLifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(Round.class);
 

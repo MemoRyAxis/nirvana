@@ -3,12 +3,8 @@ package com.memoryaxis.nirvana.model.logic;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface Lifecycle {
+public interface PeopleLifecycle extends Lifecycle {
 
-    void ready();
-
-    void start();
-
-    void over();
+    boolean isLiving();
 
 }

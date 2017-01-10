@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author memoryaxis@gmail.com
  */
-public class Bout implements Lifecycle {
+public class Bout implements GameLifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(Bout.class);
 
