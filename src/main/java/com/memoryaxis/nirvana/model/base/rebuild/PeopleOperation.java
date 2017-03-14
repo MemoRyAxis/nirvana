@@ -1,6 +1,8 @@
 package com.memoryaxis.nirvana.model.base.rebuild;
 
 /**
+ * 人物基本属性的变更
+ *
  * @author memoryaxis@gmail.com
  */
 public interface PeopleOperation {

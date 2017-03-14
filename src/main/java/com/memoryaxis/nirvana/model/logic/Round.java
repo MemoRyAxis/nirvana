@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author memoryaxis@gmail.com
  */
-public class Round implements GameLifecycle {
+public class Round implements Lifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(Round.class);
 
@@ -85,11 +85,6 @@ public class Round implements GameLifecycle {
         // buffs
 
         log.info("Round {} End.\n", currentRound);
-    }
-
-    @Override
-    public boolean isStarted() {
-        return this.isStarted;
     }
 
 }

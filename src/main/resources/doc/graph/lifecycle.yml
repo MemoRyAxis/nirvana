@@ -1,0 +1,72 @@
+#model:
+#  people:
+#    - onBattleReady
+#    - onRoundReady
+#    - onBoutReady
+#    - onRoundStart
+#    - onBoutStart
+#    - beforeAction
+#    - doAction
+#    - afterAction
+#    - over
+#  team:
+#    - ready
+#    - start
+#    - end
+
+Context:
+  - battle
+  - thisRound
+  - thisBout
+  - teamA
+  - teamB
+  - currentPeople
+
+#  - log
+
+
+GameLogic:
+  Battle:
+    Ready: onBattleReady
+    Start: onBattleStart
+    BattleDetail:
+      - Round:
+          Ready: onRoundReady
+          Start: onRoundStart
+          RoundDetail:
+            - Bout:
+                Ready: onBoutReady
+                Start: onBoutStart
+                End: onBoutEnd
+          End: onRoundEnd
+    End: ~
+
+
+nirvana:
+  model:
+    - people
+    - team
+  unit:
+    - bout
+    - round
+    - battle
+  logic:
+    lifecycle:
+      - ready
+      - start
+      - end
+    action:
+      - attack
+      - treat
+      - special
+      - buff
+      - debuff
+    reflection:
+      - attack
+      - treat
+      - special
+      - buff
+      - debuff
+
+  item: # TODO
+

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author memoryaxis@gmail.com
  */
-public class Battle implements GameLifecycle {
+public class Battle implements Lifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(Battle.class);
 
@@ -78,10 +78,4 @@ public class Battle implements GameLifecycle {
 
         log.info("Battle End.");
     }
-
-    @Override
-    public boolean isStarted() {
-        return this.isStarted;
-    }
-
 }

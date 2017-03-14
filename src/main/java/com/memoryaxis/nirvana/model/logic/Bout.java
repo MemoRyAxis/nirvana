@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author memoryaxis@gmail.com
  */
-public class Bout implements GameLifecycle {
+public class Bout implements Lifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(Bout.class);
 
@@ -88,11 +88,6 @@ public class Bout implements GameLifecycle {
         // buffs
         // etc.
 
-    }
-
-    @Override
-    public boolean isStarted() {
-        return this.isStarted;
     }
 
 }

@@ -5,4 +5,8 @@ package com.memoryaxis.nirvana.model.base.rebuild;
  */
 public interface PeopleAction {
 
+    void baseAction();
+
+    void superAction();
+
 }

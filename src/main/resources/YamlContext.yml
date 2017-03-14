@@ -1,0 +1,15 @@
+teamA:
+  name: ta
+  peoples:
+    - position:
+      role:
+      name:
+    - position:
+      role:
+      name:
+teamB:
+  name: tb
+  peoples:
+    - position:
+      role:
+      name:

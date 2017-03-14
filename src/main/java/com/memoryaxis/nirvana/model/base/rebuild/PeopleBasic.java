@@ -1,16 +1,19 @@
 package com.memoryaxis.nirvana.model.base.rebuild;
 
 import com.memoryaxis.nirvana.model.action.Action;
+import com.memoryaxis.nirvana.model.logic.GameLifecycle;
 import com.memoryaxis.nirvana.model.logic.PeopleLifecycle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 人物的基本属性
+ *
  * @author memoryaxis@gmail.com
  */
 public abstract class PeopleBasic extends PeopleExtend
-        implements PeopleOperation, PeopleAction, PeopleReflection, PeopleLifecycle {
+        implements PeopleOperation, PeopleAction, PeopleReflection, PeopleLifecycle, GameLifecycle {
 
     // hp
     private Integer fullHealthPoint;

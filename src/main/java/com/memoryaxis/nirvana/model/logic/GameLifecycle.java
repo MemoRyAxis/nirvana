@@ -3,8 +3,24 @@ package com.memoryaxis.nirvana.model.logic;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface GameLifecycle extends Lifecycle {
+public interface GameLifecycle {
 
-    boolean isStarted();
+//    boolean isStarted();
+
+    void onBattleReady();
+
+    void onBattleStart();
+
+    void onRoundReady();
+
+    void onRoundStart();
+
+    void onRoundEnd();
+
+    void onBoutReady();
+
+    void onBoutStart();
+
+    void onBoutEnd();
 
 }
