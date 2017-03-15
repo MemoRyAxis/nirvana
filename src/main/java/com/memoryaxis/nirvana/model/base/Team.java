@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by mz on 12/24/2016.
+ * @author memoryaxis@gmail.com
  */
 public class Team {
 
@@ -39,6 +39,10 @@ public class Team {
 
     public void setPeoples(Map<Position, People> peoples) {
         this.peoples = peoples;
+    }
+
+    public String getName() {
+        return name;
     }
 
     // ---

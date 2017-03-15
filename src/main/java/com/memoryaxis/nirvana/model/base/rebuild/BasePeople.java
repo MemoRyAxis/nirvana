@@ -1,5 +1,6 @@
 package com.memoryaxis.nirvana.model.base.rebuild;
 
+import com.memoryaxis.nirvana.model.action.Action;
 import com.memoryaxis.nirvana.model.logic.Context;
 
 /**
@@ -7,14 +8,8 @@ import com.memoryaxis.nirvana.model.logic.Context;
  */
 public class BasePeople extends PeopleBasic {
 
-    private Context context;
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
+    private Context getContext() {
+        return Context.getInstance();
     }
 
 
@@ -28,12 +23,26 @@ public class BasePeople extends PeopleBasic {
     // action
     @Override
     public void baseAction() {
-
+        try {
+            for (Action action : this.getBaseActions()) {
+                action.action(getContext().getAttackTeam(), getContext().getDefenseTeam());
+            }
+        } catch (Exception e) {
+            // TODO: 3/15/2017
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void superAction() {
-
+        try {
+            for (Action action : this.getSuperActions()) {
+                action.action(getContext().getAttackTeam(), getContext().getDefenseTeam());
+            }
+        } catch (Exception e) {
+            // TODO: 3/15/2017
+            e.printStackTrace();
+        }
     }
 
 

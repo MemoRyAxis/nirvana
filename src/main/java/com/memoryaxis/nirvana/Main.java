@@ -9,7 +9,12 @@ import com.memoryaxis.nirvana.model.action.treat.tr.MinTreat;
 import com.memoryaxis.nirvana.model.base.People;
 import com.memoryaxis.nirvana.model.base.Team;
 import com.memoryaxis.nirvana.model.base.position.Position;
+import com.memoryaxis.nirvana.model.base.rebuild.BasePeople;
+import com.memoryaxis.nirvana.model.base.rebuild.TeamRebuild;
+import com.memoryaxis.nirvana.model.base.rebuild.swardman.Berserker;
 import com.memoryaxis.nirvana.model.logic.Battle;
+import com.memoryaxis.nirvana.model.logic.BattleRebuild;
+import com.memoryaxis.nirvana.model.logic.Context;
 import com.memoryaxis.nirvana.model.reflection.gain.DoubleApGain;
 
 import java.util.HashMap;
@@ -20,7 +25,39 @@ import java.util.Map;
  */
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+//        a();
+        b();
+    }
+
+    public static void b() {
+        BasePeople p1 = new Berserker();
+
+        TeamRebuild a = new TeamRebuild("a");
+        Map<Position, BasePeople> aMap = new HashMap<>();
+        aMap.put(Position.R1_LEFT, p1);
+        a.setPeopleMap(aMap);
+
+        Context.getInstance().setAttackTeam(a);
+
+        BasePeople p2 = new Berserker();
+        TeamRebuild b = new TeamRebuild("b");
+        Map<Position, BasePeople> bMap = new HashMap<>();
+        bMap.put(Position.R1_LEFT, p2);
+        b.setPeopleMap(bMap);
+
+        Context.getInstance().setDefenseTeam(b);
+
+        BattleRebuild battle = (BattleRebuild) new BattleRebuild()
+                .setA(a)
+                .setB(b);
+        battle.ready();
+        battle.start();
+        battle.over();
+
+    }
+
+    public static void a() {
         People pa = new People("pa")
                 .setHp(300)
                 .setFhp(300)

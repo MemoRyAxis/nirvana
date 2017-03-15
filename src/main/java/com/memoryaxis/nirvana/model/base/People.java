@@ -2,6 +2,7 @@ package com.memoryaxis.nirvana.model.base;
 
 import com.memoryaxis.nirvana.model.action.Action;
 import com.memoryaxis.nirvana.model.base.buff.Buff;
+import com.memoryaxis.nirvana.model.base.rebuild.BasePeople;
 import com.memoryaxis.nirvana.model.reflection.Reflection;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author memoryaxis@gmail.com
  */
-public class People {
+public class People extends BasePeople {
 
     private final String name;
 
@@ -144,14 +145,14 @@ public class People {
         return this;
     }
 
-    public void increaseAp(Integer ap) {
-        this.ap += ap;
-        this.onApIncrease.reflection(this);
-    }
+//    public void increaseAp(Integer ap) {
+//        this.ap += ap;
+//        this.onApIncrease.reflection(this);
+//    }
 
-    public void decreaseAp(Integer ap) {
-        this.ap -= ap;
-    }
+//    public void decreaseAp(Integer ap) {
+//        this.ap -= ap;
+//    }
 
     public Integer getPa() {
         return pa;

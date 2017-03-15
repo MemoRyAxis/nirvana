@@ -32,6 +32,14 @@ public class Battle implements Lifecycle {
         return this;
     }
 
+    public Team getA() {
+        return a;
+    }
+
+    public Team getB() {
+        return b;
+    }
+
     @Override
     public void ready() {
         log.info("Battle Start!");

@@ -36,6 +36,14 @@ public class Round implements Lifecycle {
         return this;
     }
 
+    public Team getA() {
+        return a;
+    }
+
+    public Team getB() {
+        return b;
+    }
+
     @Override
     public void ready() {
         a.printInfo();
@@ -58,7 +66,7 @@ public class Round implements Lifecycle {
                     Team attackTeam = teamPair[0];
                     Team defenceTeam = teamPair[1];
 
-                    People p = attackTeam.getPeoples().get(position);
+                    People p = (People) attackTeam.getPeoples().get(position);
                     attackTeam.setCurrentActionPosition(position);
                     if (p != null) {
                         Bout bout = new Bout()
