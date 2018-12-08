@@ -10,8 +10,18 @@ import com.memoryaxis.nirvana.frame.Round;
 public class App {
 
     public static void main(String[] args) {
-        People p1 = new People(100, 100, 21);
-        People p2 = new People(130, 130, 18);
+        People p1 = People.builder()
+                .baseHp(100)
+                .currentHp(100)
+                .atk(21)
+//                .haveSkill(true)
+                .build();
+        People p2 = People.builder()
+                .baseHp(130)
+                .currentHp(130)
+                .atk(18)
+                .haveSkill(false)
+                .build();
 
         Game.start(new Round(p1, p2));
     }

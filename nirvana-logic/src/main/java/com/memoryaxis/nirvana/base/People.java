@@ -1,24 +1,27 @@
 package com.memoryaxis.nirvana.base;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author memoryaxis@gmail.com
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class People {
 
-    private Integer baseHp;
+    @Builder.Default
+    private Integer baseHp = 0;
 
-    private Integer currentHp;
+    @Builder.Default
+    private Integer currentHp = 0;
 
-    private Integer atk;
+    @Builder.Default
+    private Integer atk = 0;
 
-    public boolean isDead() {
-        return this.currentHp < 0;
-    }
+    @Builder.Default
+    private Integer currentMp = 0;
+
+    @Builder.Default
+    private Boolean haveSkill = false;
 }
