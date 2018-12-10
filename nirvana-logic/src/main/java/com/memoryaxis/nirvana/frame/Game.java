@@ -20,18 +20,18 @@ public class Game {
         while (currentRoundCount <= MAX_ROUND_COUNT) {
             log.info("round {} start!", currentRoundCount);
             log.info("===============");
-            log.debug("p1: {}", round.getP1());
-            log.debug("p2: {}", round.getP2());
+            log.debug("attacker: {}", round.getAttacker());
+            log.debug("defender: {}", round.getDefender());
 
-            attack(round.getP1(), round.getP2());
-            if (PeopleUtils.isDead(round.getP2())) {
-                log.info("p2 is dead");
+            attack(round.getAttacker(), round.getDefender());
+            if (PeopleUtils.isDead(round.getDefender())) {
+                log.info("defender is dead");
                 break;
             }
 
-            attack(round.getP2(), round.getP1());
-            if (PeopleUtils.isDead(round.getP1())) {
-                log.info("p1 is dead");
+            attack(round.getDefender(), round.getAttacker());
+            if (PeopleUtils.isDead(round.getAttacker())) {
+                log.info("attacker is dead");
                 break;
             }
 
@@ -45,8 +45,8 @@ public class Game {
     private static void attack(People attackP, People defendP) {
         if (PeopleUtils.haveSkill(attackP)) {
             // 实现技能效果
-            defendP.setCurrentHp(defendP.getCurrentHp() - attackP.getAtk() * 2);
-            log.info("p1: use skill!");
+            attackP.getSkill().effect(attackP, defendP);
+            log.info("attacker: use skill!");
             PeopleUtils.afterSkill(attackP);
         } else {
             defendP.setCurrentHp(defendP.getCurrentHp() - attackP.getAtk());

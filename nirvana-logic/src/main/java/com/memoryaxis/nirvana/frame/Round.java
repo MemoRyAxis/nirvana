@@ -11,8 +11,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Round {
 
-    private People p1;
+    private People attacker;
 
-    private People p2;
-
+    private People defender;
 }

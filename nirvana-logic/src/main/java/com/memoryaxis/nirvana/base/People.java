@@ -1,5 +1,6 @@
 package com.memoryaxis.nirvana.base;
 
+import com.memoryaxis.nirvana.base.skill.Skill;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,6 +23,5 @@ public class People {
     @Builder.Default
     private Integer currentMp = 0;
 
-    @Builder.Default
-    private Boolean haveSkill = false;
+    private Skill skill;
 }
