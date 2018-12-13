@@ -1,9 +1,9 @@
 package com.memoryaxis.nirvana;
 
 import com.memoryaxis.nirvana.base.People;
-import com.memoryaxis.nirvana.base.Reflection;
 import com.memoryaxis.nirvana.base.action.Attack;
 import com.memoryaxis.nirvana.base.action.Recovery;
+import com.memoryaxis.nirvana.base.reflection.Reflection;
 import com.memoryaxis.nirvana.frame.Game;
 import com.memoryaxis.nirvana.frame.Round;
 

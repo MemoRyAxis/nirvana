@@ -2,15 +2,13 @@ package com.memoryaxis.nirvana.frame;
 
 import com.memoryaxis.nirvana.base.People;
 import com.memoryaxis.nirvana.base.PeopleUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author memoryaxis@gmail.com
  */
+@Slf4j
 public class Game {
-
-    private static final Logger log = LoggerFactory.getLogger(Game.class);
 
     private static final int MAX_ROUND_COUNT = 20;
 

@@ -28,6 +28,7 @@
         <!--dependency version-->
         <lombok.version>1.18.0</lombok.version>
         <logback.version>1.1.7</logback.version>
+        <guava.version>23.0</guava.version>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +60,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+        <!--utils-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
     </dependencies>
 
