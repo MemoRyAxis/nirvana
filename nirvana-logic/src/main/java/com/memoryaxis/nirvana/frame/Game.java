@@ -45,12 +45,12 @@ public class Game {
     private static void attack(People attackP, People defendP) {
         if (PeopleUtils.haveSkill(attackP)) {
             // 实现技能效果
-            attackP.getSkill().effect(attackP, defendP);
-            log.info("attacker: use skill!");
-            PeopleUtils.afterSkill(attackP);
+            attackP.getSkill().action(attackP, defendP);
+            log.info("attacker: use action!");
+            attackP.afterSkill();
         } else {
-            defendP.setCurrentHp(defendP.getCurrentHp() - attackP.getAtk());
-            PeopleUtils.afterAttack(attackP);
+            attackP.getAction().action(attackP, defendP);
+            attackP.afterAttack();
         }
     }
 }
