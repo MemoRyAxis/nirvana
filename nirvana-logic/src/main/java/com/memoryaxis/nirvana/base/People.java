@@ -73,6 +73,17 @@ public class People {
         this.reflection.afterDecreaseHp(this, hp, from);
     }
 
+    // TODO
+    public void attack(People defendPeople) {
+        if (PeopleUtils.haveSkill(this)) {
+            this.getSkill().action(this, defendPeople);
+            this.afterSkill();
+        } else {
+            this.getAction().action(this, defendPeople);
+            this.afterAttack();
+        }
+    }
+
     /**
      * 攻击后
      */

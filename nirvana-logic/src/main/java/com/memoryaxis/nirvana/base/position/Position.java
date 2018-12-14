@@ -7,38 +7,48 @@ import java.util.List;
 /**
  * @author memoryaxis@gmail.com
  */
-public enum Position {
+public enum Position implements Distance {
 
-    FRONT_LEFT(Row.Rows.FRONT, Col.Cols.LEFT),
+    FRONT_LEFT(Rows.FRONT, Cols.LEFT),
 
-    FRONT_MIDDLE(Row.Rows.FRONT, Col.Cols.MIDDLE),
+    FRONT_MIDDLE(Rows.FRONT, Cols.MIDDLE),
 
-    FRONT_RIGHT(Row.Rows.FRONT, Col.Cols.RIGHT),
+    FRONT_RIGHT(Rows.FRONT, Cols.RIGHT),
 
-    BACK_LEFT(Row.Rows.BACK, Col.Cols.LEFT),
+    BACK_LEFT(Rows.BACK, Cols.LEFT),
 
-    BACK_MIDDLE(Row.Rows.BACK, Col.Cols.MIDDLE),
+    BACK_MIDDLE(Rows.BACK, Cols.MIDDLE),
 
-    BACK_RIGHT(Row.Rows.BACK, Col.Cols.RIGHT);
+    BACK_RIGHT(Rows.BACK, Cols.RIGHT);
 
-    private Row row;
+    private Rows row;
 
-    private Col col;
+    private Cols col;
 
-    Position(Row row, Col col) {
+    Position(Rows row, Cols col) {
         this.row = row;
         this.col = col;
     }
 
-    public Row getRow() {
+    public Rows getRow() {
         return row;
     }
 
-    public Col getCol() {
+    public Cols getCol() {
         return col;
     }
 
     public static List<Position> getPositions() {
         return Lists.newArrayList(values());
+    }
+
+    @Override
+    public int getDistance(Distance distance) {
+        if (distance instanceof Position) {
+            Position position = (Position) distance;
+            return this.getRow().getDistance(position.getRow())
+                    + this.getCol().getDistance(position.getCol());
+        }
+        throw new IllegalStateException();
     }
 }
