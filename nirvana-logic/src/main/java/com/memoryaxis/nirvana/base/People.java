@@ -1,9 +1,14 @@
 package com.memoryaxis.nirvana.base;
 
+import com.google.common.collect.Lists;
 import com.memoryaxis.nirvana.base.action.Action;
+import com.memoryaxis.nirvana.base.reflection.AttackReflection;
+import com.memoryaxis.nirvana.base.reflection.Reflection;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * @author memoryaxis@gmail.com
@@ -32,8 +37,11 @@ public class People {
     @Builder.Default
     private Reflection reflection = Reflection.Reflections.BASE_REFLECTION;
 
+    @Builder.Default
+    private List<AttackReflection> attackReflectionList = Lists.newArrayList();
+
     @Builder
-    public People(Integer baseHp, Integer currentHp, Integer atk, Integer currentMp, Action action, Action skill, Reflection reflection) {
+    public People(Integer baseHp, Integer currentHp, Integer atk, Integer currentMp, Action action, Action skill, Reflection reflection, List<AttackReflection> attackReflectionList) {
         this.baseHp = baseHp;
         this.currentHp = currentHp;
         this.atk = atk;
@@ -41,8 +49,8 @@ public class People {
         this.action = action;
         this.skill = skill;
         this.reflection = reflection;
+        this.attackReflectionList = attackReflectionList;
     }
-
 
     //
     private static final int DEFAULT_MP = 0;
@@ -70,6 +78,17 @@ public class People {
         this.setCurrentHp(this.getCurrentHp() - hp);
 
         this.reflection.afterDecreaseHp(this, hp, from);
+    }
+
+    // TODO
+    public void attack(People defendPeople) {
+        if (PeopleUtils.haveSkill(this)) {
+            this.getSkill().action(this, defendPeople);
+            this.afterSkill();
+        } else {
+            this.getAction().action(this, defendPeople);
+            this.afterAttack();
+        }
     }
 
     /**

@@ -1,4 +1,6 @@
-package com.memoryaxis.nirvana.base;
+package com.memoryaxis.nirvana.base.reflection;
+
+import com.memoryaxis.nirvana.base.People;
 
 import java.math.BigDecimal;
 
@@ -29,13 +31,6 @@ public interface Reflection {
 
     enum Reflections implements Reflection {
         BASE_REFLECTION,
-        LIFE_STEAL {
-            @Override
-            public void afterAction(People people) {
-                Integer stealHp = new BigDecimal(people.getBaseHp() * 0.3).intValue();
-                people.increaseHp(stealHp, people);
-            }
-        },
 
         REFLECTS {
             @Override
