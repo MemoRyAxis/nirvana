@@ -13,14 +13,17 @@ import java.util.Map;
 @Data
 public class Team {
 
+    private String name = "";
+
     private Map<Position, People> peopleMaps;
 
     private LinkedList<Position> positionList;
 
-    public Team(People... peoples) {
+    public Team(String name, People... peoples) {
         if (peoples == null || peoples.length < 1) {
             throw new IllegalStateException();
         }
+        this.name = name;
         peopleMaps = Maps.newEnumMap(Position.class);
         this.positionList = new LinkedList<>();
         for (int i = 0; i < Position.getPositions().size(); i++) {

@@ -11,7 +11,7 @@ public class PeopleUtils {
      * 是否已阵亡
      */
     public static boolean isDead(People people) {
-        return people.getCurrentHp() < 0;
+        return people == null || people.getCurrentHp() < 0;
     }
 
     /**

@@ -1,11 +1,9 @@
 package com.memoryaxis.nirvana.frame;
 
-import com.google.common.collect.Ordering;
 import com.memoryaxis.nirvana.base.People;
 import com.memoryaxis.nirvana.base.PeopleUtils;
 import com.memoryaxis.nirvana.base.Team;
 import com.memoryaxis.nirvana.base.TeamUtils;
-import com.memoryaxis.nirvana.base.position.Distance;
 import com.memoryaxis.nirvana.base.position.Position;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,51 +21,73 @@ public class TeamGame {
         Team attackTeam = teamRound.getAttackTeam();
         Team defendTeam = teamRound.getDefendTeam();
 
-        System.out.println("attack team");
-        TeamUtils.printTeam(attackTeam);
-        System.out.println("defend team");
-        TeamUtils.printTeam(defendTeam);
-
         while (currentRoundCount <= MAX_ROUND_COUNT) {
+
+            System.out.println("--- round " + currentRoundCount + " start ---");
+
+            System.out.println("attack team");
+            TeamUtils.printTeam(attackTeam, true);
+            System.out.println("defend team");
+            TeamUtils.printTeam(defendTeam, false);
+
+            boolean isOneTeamLose = false;
 
             for (int i = 0; i < Position.getPositions().size(); i++) {
                 Position attackPosition = Position.getPositions().get(i);
+
                 doAttack(attackTeam, defendTeam, attackPosition);
-                if (defendTeam.getPositionList().isEmpty()) {
+                if (TeamUtils.haveNoPeople(defendTeam)) {
                     log.info("defend team lose");
+                    isOneTeamLose = true;
+                    break;
                 }
 
                 doAttack(defendTeam, attackTeam, attackPosition);
-                if (attackTeam.getPositionList().isEmpty()) {
+                if (TeamUtils.haveNoPeople(attackTeam)) {
                     log.info("attack team lose");
+                    isOneTeamLose = true;
+                    break;
                 }
             }
+            System.out.println("--- round " + currentRoundCount + " end ---");
+            System.out.println();
 
-            System.out.println("--- round " + currentRoundCount + " ---");
-            System.out.println("attack team");
-            TeamUtils.printTeam(attackTeam);
-            System.out.println("defend team");
-            TeamUtils.printTeam(defendTeam);
+            if (isOneTeamLose) {
+                break;
+            }
 
             currentRoundCount++;
         }
     }
 
     private static void doAttack(Team attackTeam, Team defendTeam, Position attackPosition) {
-        Ordering<Distance> distanceOrdering = Ordering.natural()
-                .onResultOf(attackPosition::getDistance);
 
         if (attackTeam.getPositionList().contains(attackPosition)) {
-            Position defendPosition = defendTeam.getPositionList().stream()
-                    .min(distanceOrdering)
-                    .orElseThrow(IllegalStateException::new);
+            Position defendPosition = null;
+            int minDistance = Integer.MAX_VALUE;
+            for (int i = 0; i < defendTeam.getPositionList().size(); i++) {
+                Position dp = defendTeam.getPositionList().get(i);
+                int distance = attackPosition.getDistance(dp);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    defendPosition = dp;
+                }
+            }
+
+//            System.out.println("ap: " + attackPosition + ", dp: " + defendPosition);
 
             People attackPeople = attackTeam.getPeopleMaps().get(attackPosition);
             People defendPeople = defendTeam.getPeopleMaps().get(defendPosition);
+//            System.out.println(defendPeople);
             attackPeople.attack(defendPeople);
+//            System.out.println(defendPeople);
+
+//            System.out.println();
 
             if (PeopleUtils.isDead(defendPeople)) {
                 defendTeam.getPositionList().remove(defendPosition);
+                defendTeam.getPeopleMaps().remove(defendPosition);
+//                System.out.println(defendTeam.getName() + "[" + defendPosition + "] is dead!");
             }
         }
     }

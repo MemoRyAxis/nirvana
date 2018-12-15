@@ -21,25 +21,8 @@ public class App {
     }
 
     private static void startTeamGame() {
-        People p1 = People.builder()
-                .baseHp(100)
-                .currentHp(100)
-                .atk(21)
-                .action(Attack.Attacks.BASE_ATTACK)
-                .skill(Attack.Attacks.DOUBLE_ATTACK)
-                .reflection(Reflection.Reflections.LIFE_STEAL)
-                .build();
-        People p2 = People.builder()
-                .baseHp(130)
-                .currentHp(130)
-                .atk(18)
-                .action(Attack.Attacks.BASE_ATTACK)
-                .skill(Recovery.Recoveries.BASE_RECOVERY)
-                .reflection(Reflection.Reflections.LIFE_STEAL)
-                .build();
-
-        Team t1 = new Team(p1, p1, p1, p2, p2, p2);
-        Team t2 = new Team(p2, p2, p2, p1, p1, p1);
+        Team t1 = new Team("T1", buildP1(), buildP1(), buildP1(), buildP2(), buildP2(), buildP2());
+        Team t2 = new Team("T2", buildP2(), buildP2(), buildP2(), buildP1(), buildP1(), buildP1());
 
         TeamGame.start(new TeamRound(t1, t2));
     }
@@ -63,5 +46,30 @@ public class App {
                 .build();
 
         Game.start(new Round(p1, p2));
+    }
+
+    private static People buildP1() {
+        People p1 = People.builder()
+                .baseHp(100)
+                .currentHp(100)
+                .atk(21)
+                .action(Attack.Attacks.BASE_ATTACK)
+                .skill(Attack.Attacks.DOUBLE_ATTACK)
+//                .reflection(Reflection.Reflections.LIFE_STEAL)
+                .build();
+        return p1;
+    }
+
+    private static People buildP2() {
+        People p2 = People.builder()
+                .baseHp(130)
+                .currentHp(130)
+                .atk(18)
+                .action(Attack.Attacks.BASE_ATTACK)
+                .skill(Attack.Attacks.DOUBLE_ATTACK)
+//                .skill(Recovery.Recoveries.BASE_RECOVERY)
+//                .reflection(Reflection.Reflections.LIFE_STEAL)
+                .build();
+        return p2;
     }
 }
