@@ -7,11 +7,33 @@ public class PeopleUtils {
 
     private static final int MAX_MP = 100;
 
+    public static String getPeopleInfo(People people) {
+        if (people == null) {
+            return "-";
+        } else if (isDead(people)) {
+            return "DEAD";
+        } else {
+            return people.getCurrentHp()
+                    + "/"
+                    + people.getBaseHp()
+                    + "("
+                    + people.getAtk()
+                    + ")";
+        }
+    }
+
+    public static int getPeopleHp(People people) {
+        if (people == null) {
+            return 0;
+        }
+        return people.getCurrentHp();
+    }
+
     /**
      * 是否已阵亡
      */
     public static boolean isDead(People people) {
-        return people == null || people.getCurrentHp() < 0;
+        return getPeopleHp(people) <= 0;
     }
 
     /**

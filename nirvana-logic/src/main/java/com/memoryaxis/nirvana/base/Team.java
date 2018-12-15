@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 public class Team {
 
-    private String name = "";
+    private String name;
 
     private Map<Position, People> peopleMaps;
 
@@ -26,11 +26,44 @@ public class Team {
         this.name = name;
         peopleMaps = Maps.newEnumMap(Position.class);
         this.positionList = new LinkedList<>();
-        for (int i = 0; i < Position.getPositions().size(); i++) {
+        for (int i = 0; i < Position.getPositions().size() && i < peoples.length; i++) {
             Position position = Position.getPositions().get(i);
             People people = peoples[i];
-            this.positionList.add(position);
-            this.peopleMaps.put(position, people);
+            if (people != null) {
+                this.positionList.add(position);
+                this.peopleMaps.put(position, people);
+            }
+        }
+    }
+
+    public void doAttack(Team defendTeam, Position attackPosition) {
+        if (positionList.contains(attackPosition)) {
+            Position defendPosition = null;
+            int minDistance = Integer.MAX_VALUE;
+            for (int i = 0; i < defendTeam.getPositionList().size(); i++) {
+                Position dp = defendTeam.getPositionList().get(i);
+                int distance = attackPosition.getDistance(dp);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    defendPosition = dp;
+                }
+            }
+
+//            System.out.println("ap: " + attackPosition + ", dp: " + defendPosition);
+
+            People attackPeople = peopleMaps.get(attackPosition);
+            People defendPeople = defendTeam.getPeopleMaps().get(defendPosition);
+//            System.out.println(defendPeople);
+            attackPeople.attack(defendPeople);
+//            System.out.println(defendPeople);
+
+//            System.out.println();
+
+            if (PeopleUtils.isDead(defendPeople)) {
+                defendTeam.getPositionList().remove(defendPosition);
+                defendTeam.getPeopleMaps().remove(defendPosition);
+//                System.out.println(defendTeam.getName() + "[" + defendPosition + "] is dead!");
+            }
         }
     }
 }
