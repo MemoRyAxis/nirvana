@@ -49,27 +49,25 @@ public class App {
     }
 
     private static People buildP1() {
-        People p1 = People.builder()
+        return People.builder()
                 .baseHp(100)
                 .currentHp(100)
                 .atk(21)
                 .action(Attack.Attacks.BASE_ATTACK)
                 .skill(Attack.Attacks.DOUBLE_ATTACK)
-//                .reflection(Reflection.Reflections.LIFE_STEAL)
+                .reflection(Reflection.Reflections.LIFE_STEAL)
                 .build();
-        return p1;
     }
 
     private static People buildP2() {
-        People p2 = People.builder()
+        return People.builder()
                 .baseHp(130)
                 .currentHp(130)
                 .atk(18)
                 .action(Attack.Attacks.BASE_ATTACK)
-                .skill(Attack.Attacks.DOUBLE_ATTACK)
-//                .skill(Recovery.Recoveries.BASE_RECOVERY)
-//                .reflection(Reflection.Reflections.LIFE_STEAL)
+//                .skill(Attack.Attacks.DOUBLE_ATTACK)
+                .skill(Recovery.Recoveries.BASE_RECOVERY)
+                .reflection(Reflection.Reflections.LIFE_STEAL)
                 .build();
-        return p2;
     }
 }
