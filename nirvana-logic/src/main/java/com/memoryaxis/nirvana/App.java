@@ -6,7 +6,7 @@ import com.memoryaxis.nirvana.base.Team;
 import com.memoryaxis.nirvana.base.action.Attack;
 import com.memoryaxis.nirvana.base.action.Recovery;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
-import com.memoryaxis.nirvana.base.reflection.Reflection;
+import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
 import com.memoryaxis.nirvana.frame.Game;
 import com.memoryaxis.nirvana.frame.Round;
 import com.memoryaxis.nirvana.frame.TeamGame;
@@ -47,7 +47,7 @@ public class App {
                 .atk(18)
                 .action(Attack.Attacks.BASE_ATTACK)
                 .skill(Recovery.Recoveries.BASE_RECOVERY)
-                .reflection(Reflection.Reflections.REFLECTS)
+                .peopleReflectionList(Lists.newArrayList(PeopleReflection.Reflections.REFLECTS))
                 .attackReflectionList(Lists.newArrayList(AttackReflection.AttackReflections.LIFE_STEAL))
                 .build();
 
@@ -60,7 +60,7 @@ public class App {
                 .currentHp(100)
                 .atk(21)
                 .action(Attack.Attacks.BASE_ATTACK)
-//                .skill(Attack.Attacks.DOUBLE_ATTACK)
+                .skill(Attack.Attacks.DOUBLE_ATTACK)
                 .attackReflectionList(Lists.newArrayList(AttackReflection.AttackReflections.LIFE_STEAL))
                 .build();
     }
@@ -70,9 +70,10 @@ public class App {
                 .baseHp(130)
                 .currentHp(130)
                 .atk(18)
-                .action(Attack.Attacks.DOUBLE_ATTACK)
+                .defaultMp(100)
+                .action(Attack.Attacks.BASE_ATTACK)
 //                .skill(Attack.Attacks.DOUBLE_ATTACK)
-//                .skill(Recovery.Recoveries.BASE_RECOVERY)
+                .skill(Recovery.Recoveries.BASE_RECOVERY)
                 .build();
     }
 }

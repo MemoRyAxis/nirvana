@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface Reflection {
+public interface PeopleReflection {
 
     default void beforeIncreaseHp(People people, Integer hp, People from) {
 
@@ -29,7 +29,7 @@ public interface Reflection {
 
     }
 
-    enum Reflections implements Reflection {
+    enum Reflections implements PeopleReflection {
         BASE_REFLECTION,
 
         REFLECTS {

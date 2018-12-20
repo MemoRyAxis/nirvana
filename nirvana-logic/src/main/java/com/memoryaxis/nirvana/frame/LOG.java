@@ -32,7 +32,7 @@ public class LOG {
 
     public static void teamRoundResult(Team attackTeam, Team defendTeam) {
         if (attackTeam.getPositionList().size() > defendTeam.getPositionList().size()) {
-            logicLog.info("attack team [{}] win!", attackTeam.getName());
+            logicLog.info("doAction team [{}] win!", attackTeam.getName());
         } else {
             logicLog.info("defend team [{}] win!", defendTeam.getName());
         }
@@ -66,5 +66,9 @@ public class LOG {
                     "BR", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_RIGHT)));
             teamLog.info("{} Team: {}", DEFEND_CHAR, team.getName());
         }
+    }
+
+    public static void debug(String msg) {
+        logicLog.debug(msg);
     }
 }

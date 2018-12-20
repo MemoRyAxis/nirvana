@@ -2,8 +2,11 @@ package com.memoryaxis.nirvana.base;
 
 import com.google.common.collect.Lists;
 import com.memoryaxis.nirvana.base.action.Action;
+import com.memoryaxis.nirvana.base.effect.Effect;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
-import com.memoryaxis.nirvana.base.reflection.Reflection;
+import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
+import com.memoryaxis.nirvana.base.reflection.SkillReflection;
+import com.memoryaxis.nirvana.frame.LOG;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,83 +31,79 @@ public class People {
     private Integer atk = 0;
 
     @Builder.Default
+    private Integer defaultMp = 0;
+
+    @Builder.Default
     private Integer currentMp = 0;
+
+    @Builder.Default
+    private Integer mpRecovery = 30;
 
     private Action action;
 
     private Action skill;
 
     @Builder.Default
-    private Reflection reflection = Reflection.Reflections.BASE_REFLECTION;
+    private List<PeopleReflection> peopleReflectionList = Lists.newArrayList();
 
     @Builder.Default
     private List<AttackReflection> attackReflectionList = Lists.newArrayList();
 
+    @Builder.Default
+    private List<SkillReflection> skillReflectionList = Lists.newArrayList();
+
     @Builder
-    public People(Integer baseHp, Integer currentHp, Integer atk, Integer currentMp, Action action, Action skill, Reflection reflection, List<AttackReflection> attackReflectionList) {
+    public People(Integer baseHp, Integer currentHp, Integer atk, Integer defaultMp, Integer currentMp, Integer mpRecovery, Action action, Action skill, List<PeopleReflection> peopleReflectionList, List<AttackReflection> attackReflectionList, List<SkillReflection> skillReflectionList) {
         this.baseHp = baseHp;
         this.currentHp = currentHp;
         this.atk = atk;
+        this.defaultMp = defaultMp;
         this.currentMp = currentMp;
+        this.mpRecovery = mpRecovery;
         this.action = action;
         this.skill = skill;
-        this.reflection = reflection;
+        this.peopleReflectionList = peopleReflectionList;
         this.attackReflectionList = attackReflectionList;
+        this.skillReflectionList = skillReflectionList;
     }
-
-    //
-    private static final int DEFAULT_MP = 0;
-
-    private static final int MP_RECOVERY = 30;
 
     /**
      * 增加血量
      */
     public void increaseHp(Integer hp, People from) {
-        this.reflection.beforeIncreaseHp(this, hp, from);
+        this.peopleReflectionList.forEach(reflection -> reflection.beforeIncreaseHp(this, hp, from));
 
         Integer afterHp = this.getCurrentHp() + hp;
         this.setCurrentHp(afterHp > this.getBaseHp() ? this.getBaseHp() : afterHp);
 
-        this.reflection.afterIncreaseHp(this, hp, from);
+        this.peopleReflectionList.forEach(reflection -> reflection.afterIncreaseHp(this, hp, from));
     }
 
     /**
      * 减少血量
      */
     public void decreaseHp(Integer hp, People from) {
-        this.reflection.beforeDecreaseHp(this, hp, from);
+        this.peopleReflectionList.forEach(reflection -> reflection.beforeDecreaseHp(this, hp, from));
 
         this.setCurrentHp(this.getCurrentHp() - hp);
 
-        this.reflection.afterDecreaseHp(this, hp, from);
+        this.peopleReflectionList.forEach(reflection -> reflection.afterDecreaseHp(this, hp, from));
     }
 
-    // TODO
-    public void attack(People defendPeople) {
+    public void doAction(People defendP) {
         if (PeopleUtils.haveSkill(this)) {
-            this.getSkill().action(this, defendPeople);
-            this.afterSkill();
+            this.skillReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
+
+            LOG.debug("skill");
+            Effect effect = this.getSkill().action(this, defendP);
+
+            this.skillReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
         } else {
-            this.getAction().action(this, defendPeople);
-            this.afterAttack();
+            this.attackReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
+
+            Effect effect = this.getAction().action(this, defendP);
+
+            this.attackReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
         }
     }
-
-    /**
-     * 攻击后
-     */
-    public void afterAttack() {
-        this.setCurrentMp(this.getCurrentMp() + MP_RECOVERY);
-
-        this.reflection.afterAction(this);
-    }
-
-    /**
-     * 施放技能后
-     */
-    public void afterSkill() {
-        this.setCurrentMp(DEFAULT_MP);
-    }
 }
-

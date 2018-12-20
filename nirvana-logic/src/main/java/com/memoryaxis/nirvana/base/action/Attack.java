@@ -1,6 +1,7 @@
 package com.memoryaxis.nirvana.base.action;
 
 import com.memoryaxis.nirvana.base.People;
+import com.memoryaxis.nirvana.base.effect.Effect;
 
 /**
  * @author memoryaxis@gmail.com
@@ -8,22 +9,12 @@ import com.memoryaxis.nirvana.base.People;
 public interface Attack extends Action {
 
     @Override
-    default void action(People attackP, People defendP) {
-        attackP.getAttackReflectionList().forEach(reflection -> {
-            reflection.beforeAttack(attackP, defendP);
-        });
-
-        Integer decreaseHp = attack(attackP, defendP);
-
-        attackP.getAttackReflectionList().forEach(reflection -> {
-            reflection.afterAttack(attackP, defendP, decreaseHp);
-        });
-    }
-
-    default int attack(People attackP, People defendP) {
+    default Effect action(People attackP, People defendP) {
         Integer decreaseHp = attackP.getAtk();
         defendP.decreaseHp(decreaseHp, attackP);
-        return decreaseHp;
+        return Effect.builder()
+                .decreaseHp(decreaseHp)
+                .build();
     }
 
     enum Attacks implements Attack {
@@ -32,10 +23,12 @@ public interface Attack extends Action {
 
         DOUBLE_ATTACK {
             @Override
-            public int attack(People attackP, People defendP) {
+            public Effect action(People attackP, People defendP) {
                 Integer decreaseHp = attackP.getAtk() * 2;
                 defendP.decreaseHp(decreaseHp, attackP);
-                return decreaseHp;
+                return Effect.builder()
+                        .decreaseHp(decreaseHp)
+                        .build();
             }
         }
     }
