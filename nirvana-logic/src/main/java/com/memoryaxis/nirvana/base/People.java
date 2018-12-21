@@ -6,7 +6,6 @@ import com.memoryaxis.nirvana.base.effect.Effect;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
 import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
 import com.memoryaxis.nirvana.base.reflection.SkillReflection;
-import com.memoryaxis.nirvana.frame.LOG;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,13 +43,16 @@ public class People {
     private Action skill;
 
     @Builder.Default
-    private List<PeopleReflection> peopleReflectionList = Lists.newArrayList();
+    private List<PeopleReflection> peopleReflectionList =
+            Lists.newArrayList(PeopleReflection.Impl.BASE);
 
     @Builder.Default
-    private List<AttackReflection> attackReflectionList = Lists.newArrayList();
+    private List<AttackReflection> attackReflectionList =
+            Lists.newArrayList(AttackReflection.Impl.BASE);
 
     @Builder.Default
-    private List<SkillReflection> skillReflectionList = Lists.newArrayList();
+    private List<SkillReflection> skillReflectionList =
+            Lists.newArrayList(SkillReflection.Impl.BASE);
 
     @Builder
     public People(Integer baseHp, Integer currentHp, Integer atk, Integer defaultMp, Integer currentMp, Integer mpRecovery, Action action, Action skill, List<PeopleReflection> peopleReflectionList, List<AttackReflection> attackReflectionList, List<SkillReflection> skillReflectionList) {
@@ -94,7 +96,6 @@ public class People {
         if (PeopleUtils.haveSkill(this)) {
             this.skillReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
 
-            LOG.debug("skill");
             Effect effect = this.getSkill().action(this, defendP);
 
             this.skillReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));

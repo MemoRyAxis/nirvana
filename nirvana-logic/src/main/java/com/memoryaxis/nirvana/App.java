@@ -47,8 +47,8 @@ public class App {
                 .atk(18)
                 .action(Attack.Attacks.BASE_ATTACK)
                 .skill(Recovery.Recoveries.BASE_RECOVERY)
-                .peopleReflectionList(Lists.newArrayList(PeopleReflection.Reflections.REFLECTS))
-                .attackReflectionList(Lists.newArrayList(AttackReflection.AttackReflections.LIFE_STEAL))
+                .peopleReflectionList(Lists.newArrayList(PeopleReflection.Impl.REFLECTS))
+                .attackReflectionList(Lists.newArrayList(AttackReflection.Impl.LIFE_STEAL))
                 .build();
 
         Game.start(new Round(p1, p2));
@@ -61,7 +61,7 @@ public class App {
                 .atk(21)
                 .action(Attack.Attacks.BASE_ATTACK)
                 .skill(Attack.Attacks.DOUBLE_ATTACK)
-                .attackReflectionList(Lists.newArrayList(AttackReflection.AttackReflections.LIFE_STEAL))
+                .attackReflectionList(Lists.newArrayList(AttackReflection.Impl.LIFE_STEAL))
                 .build();
     }
 
@@ -71,6 +71,7 @@ public class App {
                 .currentHp(130)
                 .atk(18)
                 .defaultMp(100)
+                .currentMp(100)
                 .action(Attack.Attacks.BASE_ATTACK)
 //                .skill(Attack.Attacks.DOUBLE_ATTACK)
                 .skill(Recovery.Recoveries.BASE_RECOVERY)

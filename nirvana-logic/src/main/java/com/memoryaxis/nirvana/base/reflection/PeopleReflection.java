@@ -9,35 +9,70 @@ import java.math.BigDecimal;
  */
 public interface PeopleReflection {
 
-    default void beforeIncreaseHp(People people, Integer hp, People from) {
+    void beforeIncreaseHp(People people, Integer hp, People from);
 
+    void afterIncreaseHp(People people, Integer hp, People from);
+
+    void beforeDecreaseHp(People people, Integer hp, People from);
+
+    void afterDecreaseHp(People people, Integer hp, People from);
+
+    class Default implements PeopleReflection {
+
+        @Override
+        public void beforeIncreaseHp(People people, Integer hp, People from) {
+        }
+
+        @Override
+        public void afterIncreaseHp(People people, Integer hp, People from) {
+        }
+
+        @Override
+        public void beforeDecreaseHp(People people, Integer hp, People from) {
+        }
+
+        @Override
+        public void afterDecreaseHp(People people, Integer hp, People from) {
+        }
     }
 
-    default void afterIncreaseHp(People people, Integer hp, People from) {
+    enum Impl implements PeopleReflection {
 
-    }
+        BASE(new Default()),
 
-    default void beforeDecreaseHp(People people, Integer hp, People from) {
-
-    }
-
-    default void afterDecreaseHp(People people, Integer hp, People from) {
-
-    }
-
-    default void afterAction(People people) {
-
-    }
-
-    enum Reflections implements PeopleReflection {
-        BASE_REFLECTION,
-
-        REFLECTS {
+        REFLECTS(new Default() {
             @Override
             public void afterDecreaseHp(People people, Integer hp, People from) {
+                super.afterDecreaseHp(people, hp, from);
                 Integer reflectHp = new BigDecimal(hp * 0.5).intValue();
                 from.decreaseHp(reflectHp, people);
             }
+        });
+
+        private PeopleReflection reflection;
+
+        Impl(PeopleReflection reflection) {
+            this.reflection = reflection;
+        }
+
+        @Override
+        public void beforeIncreaseHp(People people, Integer hp, People from) {
+            reflection.beforeIncreaseHp(people, hp, from);
+        }
+
+        @Override
+        public void afterIncreaseHp(People people, Integer hp, People from) {
+            reflection.afterIncreaseHp(people, hp, from);
+        }
+
+        @Override
+        public void beforeDecreaseHp(People people, Integer hp, People from) {
+            reflection.beforeDecreaseHp(people, hp, from);
+        }
+
+        @Override
+        public void afterDecreaseHp(People people, Integer hp, People from) {
+            reflection.afterDecreaseHp(people, hp, from);
         }
     }
 }
