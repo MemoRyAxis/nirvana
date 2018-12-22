@@ -8,10 +8,6 @@ import com.memoryaxis.nirvana.base.effect.Effect;
  */
 public interface SkillReflection extends ActionReflection {
 
-    void beforeAction(People attackP, People defendP);
-
-    void afterAction(People attackP, People defendP, Effect effect);
-
     class Default implements SkillReflection {
 
         @Override

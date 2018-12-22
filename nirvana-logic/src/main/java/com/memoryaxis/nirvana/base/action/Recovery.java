@@ -17,7 +17,7 @@ public interface Recovery extends Action {
                 .build();
     }
 
-    enum Recoveries implements Recovery {
+    enum Impl implements Recovery {
 
         BASE_RECOVERY
     }

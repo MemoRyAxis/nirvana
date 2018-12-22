@@ -2,8 +2,10 @@ package com.memoryaxis.nirvana.base;
 
 import com.google.common.collect.Lists;
 import com.memoryaxis.nirvana.base.action.Action;
+import com.memoryaxis.nirvana.base.action.Attack;
 import com.memoryaxis.nirvana.base.effect.Effect;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
+import com.memoryaxis.nirvana.base.reflection.CriticalReflection;
 import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
 import com.memoryaxis.nirvana.base.reflection.SkillReflection;
 import lombok.Builder;
@@ -20,15 +22,18 @@ import java.util.List;
 @NoArgsConstructor
 public class People {
 
+    // hp start
     @Builder.Default
     private Integer baseHp = 0;
 
     @Builder.Default
     private Integer currentHp = 0;
 
+    // atk start
     @Builder.Default
     private Integer atk = 0;
 
+    // mp start
     @Builder.Default
     private Integer defaultMp = 0;
 
@@ -38,10 +43,23 @@ public class People {
     @Builder.Default
     private Integer mpRecovery = 30;
 
-    private Action action;
+    // action start
+    @Builder.Default
+    private Action action = Attack.Impl.BASE_ATTACK;
+
+    @Builder.Default
+    private Action criticalAction = Attack.Impl.CRITICAL_ATTACK;
 
     private Action skill;
 
+    // critical start
+    @Builder.Default
+    private Double criticalChance = 0D;
+
+    @Builder.Default
+    private Double criticalDmg = 1.5D;
+
+    // reflection start
     @Builder.Default
     private List<PeopleReflection> peopleReflectionList =
             Lists.newArrayList(PeopleReflection.Impl.BASE);
@@ -51,11 +69,15 @@ public class People {
             Lists.newArrayList(AttackReflection.Impl.BASE);
 
     @Builder.Default
+    private List<CriticalReflection> criticalReflectionList =
+            Lists.newArrayList(CriticalReflection.Impl.BASE);
+
+    @Builder.Default
     private List<SkillReflection> skillReflectionList =
             Lists.newArrayList(SkillReflection.Impl.BASE);
 
     @Builder
-    public People(Integer baseHp, Integer currentHp, Integer atk, Integer defaultMp, Integer currentMp, Integer mpRecovery, Action action, Action skill, List<PeopleReflection> peopleReflectionList, List<AttackReflection> attackReflectionList, List<SkillReflection> skillReflectionList) {
+    public People(Integer baseHp, Integer currentHp, Integer atk, Integer defaultMp, Integer currentMp, Integer mpRecovery, Action action, Action criticalAction, Action skill, Double criticalChance, Double criticalDmg, List<PeopleReflection> peopleReflectionList, List<AttackReflection> attackReflectionList, List<CriticalReflection> criticalReflectionList, List<SkillReflection> skillReflectionList) {
         this.baseHp = baseHp;
         this.currentHp = currentHp;
         this.atk = atk;
@@ -63,9 +85,13 @@ public class People {
         this.currentMp = currentMp;
         this.mpRecovery = mpRecovery;
         this.action = action;
+        this.criticalAction = criticalAction;
         this.skill = skill;
+        this.criticalChance = criticalChance;
+        this.criticalDmg = criticalDmg;
         this.peopleReflectionList = peopleReflectionList;
         this.attackReflectionList = attackReflectionList;
+        this.criticalReflectionList = criticalReflectionList;
         this.skillReflectionList = skillReflectionList;
     }
 
@@ -100,11 +126,23 @@ public class People {
 
             this.skillReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
         } else {
-            this.attackReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
+            Effect effect;
 
-            Effect effect = this.getAction().action(this, defendP);
+            if (PeopleUtils.haveCritical(this)) {
+                this.attackReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
+                this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
 
-            this.attackReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
+                effect = this.getCriticalAction().action(this, defendP);
+
+                this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
+                this.attackReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
+            } else {
+                this.attackReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
+
+                effect = this.getAction().action(this, defendP);
+
+                this.attackReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
+            }
         }
     }
 }

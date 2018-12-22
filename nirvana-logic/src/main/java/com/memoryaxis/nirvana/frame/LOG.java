@@ -31,8 +31,13 @@ public class LOG {
     }
 
     public static void teamRoundResult(Team attackTeam, Team defendTeam) {
+        logicLog.info("");
+        logicLog.info("--- round over ---");
+        teamState(attackTeam, true);
+        teamState(attackTeam, false);
+        logicLog.info("");
         if (attackTeam.getPositionList().size() > defendTeam.getPositionList().size()) {
-            logicLog.info("doAction team [{}] win!", attackTeam.getName());
+            logicLog.info("attack team [{}] win!", attackTeam.getName());
         } else {
             logicLog.info("defend team [{}] win!", defendTeam.getName());
         }

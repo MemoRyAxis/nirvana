@@ -55,6 +55,8 @@ public class TeamGame {
             currentRoundCount++;
         }
 
+        LOG.teamState(attackTeam, true);
+        LOG.teamState(defendTeam, false);
         LOG.teamRoundResult(attackTeam, defendTeam);
     }
 }
