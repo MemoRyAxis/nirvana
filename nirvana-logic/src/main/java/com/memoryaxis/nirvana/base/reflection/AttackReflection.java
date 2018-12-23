@@ -28,7 +28,7 @@ public interface AttackReflection extends ActionReflection {
             @Override
             public void afterAction(People attackP, People defendP, Effect effect) {
                 super.afterAction(attackP, defendP, effect);
-                Integer stealHp = new BigDecimal(effect.getDecreaseHp() * 0.3).intValue();
+                Integer stealHp = new BigDecimal(effect.getDecreaseHp() * attackP.getLifeSteal()).intValue();
                 attackP.increaseHp(stealHp, defendP);
             }
         });

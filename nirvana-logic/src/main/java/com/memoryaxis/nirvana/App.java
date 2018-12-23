@@ -12,6 +12,8 @@ import com.memoryaxis.nirvana.frame.Round;
 import com.memoryaxis.nirvana.frame.TeamGame;
 import com.memoryaxis.nirvana.frame.TeamRound;
 
+import static com.memoryaxis.nirvana.Helper.buildWood;
+
 /**
  * @author memoryaxis@gmail.com
  */
@@ -43,21 +45,30 @@ public class App {
                 baa(),
                 baa());
 
+        Team tw = new Team("WOOD",
+                buildWood(),
+                buildWood(),
+                buildWood());
+
 //        TeamGame.start(new TeamRound(t1, t2));
 //        TeamGame.start(new TeamRound(t2, t3));
-        TeamGame.start(new TeamRound(t1, t3));
+//        TeamGame.start(new TeamRound(t1, t3));
+
+        TeamGame.start(new TeamRound(tw, t1));
+//        TeamGame.start(new TeamRound(tw, t2));
+//        TeamGame.start(new TeamRound(tw, t3));
     }
 
     private static People bat() {
-        return Helper.buildT(200, 15);
+        return Helper.buildT(200, 23);
     }
 
     private static People bas() {
-        return Helper.buildSoldier(150, 30);
+        return Helper.buildSoldier(170, 28);
     }
 
     private static People baa() {
-        return Helper.buildAssassin(130, 32);
+        return Helper.buildAssassin(130, 30);
     }
 
     private static void startGame() {

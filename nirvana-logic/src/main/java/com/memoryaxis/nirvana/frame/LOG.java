@@ -30,9 +30,9 @@ public class LOG {
         logicLog.info("");
     }
 
-    public static void teamGameEnd(Team attackTeam, Team defendTeam) {
+    public static void teamGameEnd(Team attackTeam, Team defendTeam, int roundCount) {
         logicLog.info("");
-        logicLog.info("--- round over ---");
+        logicLog.info("--- round over ({}) ---", roundCount);
         teamState(attackTeam, true);
         teamState(defendTeam, false);
         logicLog.info("");
@@ -74,6 +74,6 @@ public class LOG {
     }
 
     public static void debug(String msg) {
-        logicLog.debug(msg);
+        logicLog.debug("\t\t\t\t {}", msg);
     }
 }
