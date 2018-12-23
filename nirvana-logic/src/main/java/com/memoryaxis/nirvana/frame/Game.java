@@ -1,5 +1,6 @@
 package com.memoryaxis.nirvana.frame;
 
+import com.memoryaxis.nirvana.base.People;
 import com.memoryaxis.nirvana.base.PeopleUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,6 +14,8 @@ public class Game {
 
     public static void start(Round round) {
         int currentRoundCount = 1;
+        People attackPeople = round.getAttacker();
+        People defendPeople = round.getDefender();
 
         while (currentRoundCount <= MAX_ROUND_COUNT) {
             log.info("round {} start!", currentRoundCount);
@@ -20,13 +23,13 @@ public class Game {
             log.debug("attacker: {}", round.getAttacker());
             log.debug("defender: {}", round.getDefender());
 
-            round.getAttacker().attack(round.getDefender());
+            attackPeople.doAction(defendPeople);
             if (PeopleUtils.isDead(round.getDefender())) {
                 log.info("defender is dead");
                 break;
             }
 
-            round.getDefender().attack(round.getAttacker());
+            defendPeople.doAction(attackPeople);
             if (PeopleUtils.isDead(round.getAttacker())) {
                 log.info("attacker is dead");
                 break;

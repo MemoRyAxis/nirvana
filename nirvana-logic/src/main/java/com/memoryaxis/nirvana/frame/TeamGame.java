@@ -48,13 +48,13 @@ public class TeamGame {
 
             LOG.roundEnd(currentRoundCount);
 
+            currentRoundCount++;
+
             if (isOneTeamLose) {
                 break;
             }
-
-            currentRoundCount++;
         }
 
-        LOG.teamRoundResult(attackTeam, defendTeam);
+        LOG.teamGameEnd(attackTeam, defendTeam, currentRoundCount - 1);
     }
 }

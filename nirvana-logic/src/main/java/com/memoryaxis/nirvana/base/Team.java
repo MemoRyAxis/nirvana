@@ -54,14 +54,13 @@ public class Team {
             People attackPeople = peopleMaps.get(attackPosition);
             People defendPeople = defendTeam.getPeopleMaps().get(defendPosition);
 //            System.out.println(defendPeople);
-            attackPeople.attack(defendPeople);
+            attackPeople.doAction(defendPeople);
 //            System.out.println(defendPeople);
 
 //            System.out.println();
 
             if (PeopleUtils.isDead(defendPeople)) {
                 defendTeam.getPositionList().remove(defendPosition);
-                defendTeam.getPeopleMaps().remove(defendPosition);
 //                System.out.println(defendTeam.getName() + "[" + defendPosition + "] is dead!");
             }
         }

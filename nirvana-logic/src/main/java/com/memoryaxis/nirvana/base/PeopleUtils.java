@@ -1,5 +1,8 @@
 package com.memoryaxis.nirvana.base;
 
+import com.memoryaxis.nirvana.base.critical.Critical;
+import com.memoryaxis.nirvana.utils.Randoms;
+
 /**
  * @author memoryaxis@gmail.com
  */
@@ -42,5 +45,19 @@ public class PeopleUtils {
     public static boolean haveSkill(People people) {
         return people.getSkill() != null
                 && people.getCurrentMp() >= MAX_MP;
+    }
+
+    public static boolean haveActionCritical(People people) {
+        return people.getAction() instanceof Critical
+                && haveCriticalChance(people);
+    }
+
+    public static boolean haveSkillCritical(People people) {
+        return people.getAction() instanceof Critical
+                && haveCriticalChance(people);
+    }
+
+    private static boolean haveCriticalChance(People people) {
+        return Randoms.randomChange(people.getCriticalChance());
     }
 }
