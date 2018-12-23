@@ -30,11 +30,11 @@ public class LOG {
         logicLog.info("");
     }
 
-    public static void teamRoundResult(Team attackTeam, Team defendTeam) {
+    public static void teamGameEnd(Team attackTeam, Team defendTeam) {
         logicLog.info("");
         logicLog.info("--- round over ---");
         teamState(attackTeam, true);
-        teamState(attackTeam, false);
+        teamState(defendTeam, false);
         logicLog.info("");
         if (attackTeam.getPositionList().size() > defendTeam.getPositionList().size()) {
             logicLog.info("attack team [{}] win!", attackTeam.getName());

@@ -44,7 +44,7 @@ public interface PeopleReflection {
             @Override
             public void afterDecreaseHp(People people, Integer hp, People from) {
                 super.afterDecreaseHp(people, hp, from);
-                Integer reflectHp = new BigDecimal(hp * 0.5).intValue();
+                Integer reflectHp = new BigDecimal(hp * 0.3).intValue();
                 from.decreaseHp(reflectHp, people);
             }
         });
