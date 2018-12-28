@@ -1,4 +1,4 @@
-package com.memoryaxis.nirvana.base;
+package com.memoryaxis.nirvana.frame.people;
 
 import com.google.common.collect.Lists;
 import com.memoryaxis.nirvana.base.action.Action;

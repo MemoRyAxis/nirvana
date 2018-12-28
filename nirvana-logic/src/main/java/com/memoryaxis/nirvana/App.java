@@ -1,8 +1,6 @@
 package com.memoryaxis.nirvana;
 
 import com.google.common.collect.Lists;
-import com.memoryaxis.nirvana.base.People;
-import com.memoryaxis.nirvana.base.Team;
 import com.memoryaxis.nirvana.base.action.Attack;
 import com.memoryaxis.nirvana.base.action.Recovery;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
@@ -11,6 +9,8 @@ import com.memoryaxis.nirvana.frame.Game;
 import com.memoryaxis.nirvana.frame.Round;
 import com.memoryaxis.nirvana.frame.TeamGame;
 import com.memoryaxis.nirvana.frame.TeamRound;
+import com.memoryaxis.nirvana.frame.people.People;
+import com.memoryaxis.nirvana.frame.team.Team;
 
 import static com.memoryaxis.nirvana.Helper.buildWood;
 

@@ -1,7 +1,7 @@
 package com.memoryaxis.nirvana.frame;
 
-import com.memoryaxis.nirvana.base.People;
-import com.memoryaxis.nirvana.base.PeopleUtils;
+import com.memoryaxis.nirvana.frame.people.People;
+import com.memoryaxis.nirvana.frame.people.PeopleUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**

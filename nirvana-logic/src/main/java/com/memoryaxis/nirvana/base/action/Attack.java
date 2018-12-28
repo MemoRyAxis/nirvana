@@ -1,8 +1,8 @@
 package com.memoryaxis.nirvana.base.action;
 
-import com.memoryaxis.nirvana.base.People;
 import com.memoryaxis.nirvana.base.critical.Critical;
 import com.memoryaxis.nirvana.base.effect.Effect;
+import com.memoryaxis.nirvana.frame.people.People;
 
 import java.math.BigDecimal;
 

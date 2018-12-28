@@ -1,6 +1,6 @@
 package com.memoryaxis.nirvana.base.reflection;
 
-import com.memoryaxis.nirvana.base.People;
+import com.memoryaxis.nirvana.frame.people.People;
 
 import java.math.BigDecimal;
 

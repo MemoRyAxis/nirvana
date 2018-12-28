@@ -1,8 +1,8 @@
 package com.memoryaxis.nirvana.frame;
 
-import com.memoryaxis.nirvana.base.PeopleUtils;
-import com.memoryaxis.nirvana.base.Team;
 import com.memoryaxis.nirvana.base.position.Position;
+import com.memoryaxis.nirvana.frame.people.PeopleUtils;
+import com.memoryaxis.nirvana.frame.team.Team;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package com.memoryaxis.nirvana.base;
+package com.memoryaxis.nirvana.frame.people;
 
 import com.memoryaxis.nirvana.base.critical.Critical;
 import com.memoryaxis.nirvana.utils.Randoms;

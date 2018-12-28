@@ -1,4 +1,4 @@
-package com.memoryaxis.nirvana.base;
+package com.memoryaxis.nirvana.frame.team;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,7 +1,9 @@
-package com.memoryaxis.nirvana.base;
+package com.memoryaxis.nirvana.frame.team;
 
 import com.google.common.collect.Maps;
 import com.memoryaxis.nirvana.base.position.Position;
+import com.memoryaxis.nirvana.frame.people.People;
+import com.memoryaxis.nirvana.frame.people.PeopleUtils;
 import lombok.Data;
 
 import java.util.LinkedList;
