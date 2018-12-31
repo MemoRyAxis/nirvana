@@ -39,7 +39,8 @@ public class Team {
 
     public void doAttack(Team defendTeam, Position attackPosition) {
         if (positionList.contains(attackPosition)) {
-            peopleMaps.get(attackPosition).getTeamAction().action(this, defendTeam, attackPosition);
+            peopleMaps.get(attackPosition).doTeamAction(
+                    this, defendTeam, attackPosition);
         }
 
 //        if (positionList.contains(attackPosition)) {
