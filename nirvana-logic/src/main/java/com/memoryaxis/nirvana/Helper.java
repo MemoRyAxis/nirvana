@@ -3,6 +3,7 @@ package com.memoryaxis.nirvana;
 import com.google.common.collect.Lists;
 import com.memoryaxis.nirvana.base.action.Attack;
 import com.memoryaxis.nirvana.base.action.Recovery;
+import com.memoryaxis.nirvana.base.action.TeamAttack;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
 import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
 import com.memoryaxis.nirvana.frame.people.People;
@@ -57,6 +58,21 @@ public class Helper {
                 .skill(Attack.Impl.DOUBLE_ATTACK)
                 .criticalChance(0.5D)
                 .criticalDmg(2.5D)
+
+                .build();
+    }
+
+    // (130,30) 935~977
+    static People buildWizard(int hp, int atk) {
+        return People.builder()
+                .baseHp(hp)
+                .currentHp(hp)
+                .atk(atk)
+
+                .teamAction(TeamAttack.Impl.MULTIPLE_ATTACK)
+                .action(Attack.Impl.MULTIPLE_ATTACK)
+                .multipleAtkDmg(0.5)
+                .criticalChance(0.1D)
 
                 .build();
     }

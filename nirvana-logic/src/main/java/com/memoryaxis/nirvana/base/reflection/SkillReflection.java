@@ -16,7 +16,6 @@ public interface SkillReflection extends ActionReflection {
 
         @Override
         public void afterAction(People attackP, People defendP, Effect effect) {
-            attackP.setCurrentMp(attackP.getDefaultMp());
         }
     }
 
@@ -37,6 +36,7 @@ public interface SkillReflection extends ActionReflection {
         @Override
         public void afterAction(People attackP, People defendP, Effect effect) {
             reflection.afterAction(attackP, defendP, effect);
+            attackP.setCurrentMp(attackP.getDefaultMp());
         }
     }
 }

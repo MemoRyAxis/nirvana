@@ -44,6 +44,10 @@ public class App {
                 baa(),
                 baa(),
                 baa());
+        Team t4 = new Team("T4",
+                baw(),
+                baw(),
+                baw());
 
         Team tw = new Team("WOOD",
                 buildWood(),
@@ -53,10 +57,12 @@ public class App {
 //        TeamGame.start(new TeamRound(t1, t2));
 //        TeamGame.start(new TeamRound(t2, t3));
 //        TeamGame.start(new TeamRound(t1, t3));
+        TeamGame.start(new TeamRound(t4, t3));
 
-        TeamGame.start(new TeamRound(tw, t1));
+//        TeamGame.start(new TeamRound(tw, t1));
 //        TeamGame.start(new TeamRound(tw, t2));
 //        TeamGame.start(new TeamRound(tw, t3));
+//        TeamGame.start(new TeamRound(tw, t4));
     }
 
     private static People bat() {
@@ -69,6 +75,10 @@ public class App {
 
     private static People baa() {
         return Helper.buildAssassin(130, 30);
+    }
+
+    private static People baw() {
+        return Helper.buildWizard(130, 30);
     }
 
     private static void startGame() {

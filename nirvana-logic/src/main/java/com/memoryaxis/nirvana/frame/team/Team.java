@@ -3,7 +3,6 @@ package com.memoryaxis.nirvana.frame.team;
 import com.google.common.collect.Maps;
 import com.memoryaxis.nirvana.base.position.Position;
 import com.memoryaxis.nirvana.frame.people.People;
-import com.memoryaxis.nirvana.frame.people.PeopleUtils;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -40,31 +39,35 @@ public class Team {
 
     public void doAttack(Team defendTeam, Position attackPosition) {
         if (positionList.contains(attackPosition)) {
-            Position defendPosition = null;
-            int minDistance = Integer.MAX_VALUE;
-            for (int i = 0; i < defendTeam.getPositionList().size(); i++) {
-                Position dp = defendTeam.getPositionList().get(i);
-                int distance = attackPosition.getDistance(dp);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    defendPosition = dp;
-                }
-            }
-
-//            System.out.println("ap: " + attackPosition + ", dp: " + defendPosition);
-
-            People attackPeople = peopleMaps.get(attackPosition);
-            People defendPeople = defendTeam.getPeopleMaps().get(defendPosition);
-//            System.out.println(defendPeople);
-            attackPeople.doAction(defendPeople);
-//            System.out.println(defendPeople);
-
-//            System.out.println();
-
-            if (PeopleUtils.isDead(defendPeople)) {
-                defendTeam.getPositionList().remove(defendPosition);
-//                System.out.println(defendTeam.getName() + "[" + defendPosition + "] is dead!");
-            }
+            peopleMaps.get(attackPosition).getTeamAction().action(this, defendTeam, attackPosition);
         }
+
+//        if (positionList.contains(attackPosition)) {
+//            Position defendPosition = null;
+//            int minDistance = Integer.MAX_VALUE;
+//            for (int i = 0; i < defendTeam.getPositionList().size(); i++) {
+//                Position dp = defendTeam.getPositionList().get(i);
+//                int distance = attackPosition.getDistance(dp);
+//                if (distance < minDistance) {
+//                    minDistance = distance;
+//                    defendPosition = dp;
+//                }
+//            }
+//
+////            System.out.println("ap: " + attackPosition + ", dp: " + defendPosition);
+//
+//            People attackPeople = peopleMaps.get(attackPosition);
+//            People defendPeople = defendTeam.getPeopleMaps().get(defendPosition);
+////            System.out.println(defendPeople);
+//            attackPeople.doAction(defendPeople);
+////            System.out.println(defendPeople);
+//
+////            System.out.println();
+//
+//            if (PeopleUtils.isDead(defendPeople)) {
+//                defendTeam.getPositionList().remove(defendPosition);
+////                System.out.println(defendTeam.getName() + "[" + defendPosition + "] is dead!");
+//            }
+//        }
     }
 }

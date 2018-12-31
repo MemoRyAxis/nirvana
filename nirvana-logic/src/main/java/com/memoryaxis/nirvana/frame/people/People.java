@@ -1,15 +1,19 @@
 package com.memoryaxis.nirvana.frame.people;
 
 import com.google.common.collect.Lists;
-import com.memoryaxis.nirvana.base.action.Action;
 import com.memoryaxis.nirvana.base.action.Attack;
-import com.memoryaxis.nirvana.base.critical.Critical;
+import com.memoryaxis.nirvana.base.action.PeopleAction;
+import com.memoryaxis.nirvana.base.action.TeamAction;
+import com.memoryaxis.nirvana.base.action.TeamAttack;
+import com.memoryaxis.nirvana.base.critical.PeopleCritical;
 import com.memoryaxis.nirvana.base.effect.Effect;
+import com.memoryaxis.nirvana.base.position.Position;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
 import com.memoryaxis.nirvana.base.reflection.CriticalReflection;
 import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
 import com.memoryaxis.nirvana.base.reflection.SkillReflection;
 import com.memoryaxis.nirvana.frame.LOG;
+import com.memoryaxis.nirvana.frame.team.Team;
 import lombok.Builder;
 import lombok.Data;
 
@@ -45,9 +49,14 @@ public class People {
 
     // action start
     @Builder.Default
-    private Action action = Attack.Impl.BASE_ATTACK;
+    private PeopleAction action = Attack.Impl.BASE_ATTACK;
 
-    private Action skill;
+    private PeopleAction skill;
+
+    @Builder.Default
+    private TeamAction teamAction = TeamAttack.Impl.BASE_ATTACK;
+
+    private TeamAction teamSkill;
 
     // critical start
     @Builder.Default
@@ -59,6 +68,10 @@ public class People {
     // life steal start
     @Builder.Default
     private Double lifeSteal = 0D;
+
+    // multiple attack dmg
+    @Builder.Default
+    private Double multipleAtkDmg = 1D;
 
     // reflection start
     @Builder.Default
@@ -100,6 +113,12 @@ public class People {
         this.peopleReflectionList.forEach(reflection -> reflection.afterDecreaseHp(this, hp, from));
     }
 
+    public void doTeamAction(Team attackTeam, Team defendTeam, Position currentPosition) {
+        // todo before
+        this.getTeamAction().action(attackTeam, defendTeam, currentPosition);
+        // todo after
+    }
+
     public void doAction(People defendP) {
         int oriHp = defendP.getCurrentHp();
         if (PeopleUtils.haveSkill(this)) {
@@ -107,12 +126,12 @@ public class People {
             Effect effect;
             if (PeopleUtils.haveSkillCritical(this)) {
                 this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
-                Critical critical = (Critical) this.getSkill();
+                PeopleCritical critical = (PeopleCritical) this.getSkill();
                 effect = critical.critical(this, defendP);
                 LOG.debug("critical skill: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
-                Action action = this.getSkill();
+                PeopleAction action = this.getSkill();
                 LOG.debug("skill: " + action);
                 effect = action.action(this, defendP);
             }
@@ -122,12 +141,12 @@ public class People {
             this.attackReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
             if (PeopleUtils.haveActionCritical(this)) {
                 this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
-                Critical critical = (Critical) this.getAction();
+                PeopleCritical critical = (PeopleCritical) this.getAction();
                 effect = critical.critical(this, defendP);
                 LOG.debug("critical action: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
-                Action action = this.getAction();
+                PeopleAction action = this.getAction();
                 effect = action.action(this, defendP);
                 LOG.debug("action: " + action);
             }

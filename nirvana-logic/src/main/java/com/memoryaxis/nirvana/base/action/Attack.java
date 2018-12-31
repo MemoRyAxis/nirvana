@@ -1,6 +1,6 @@
 package com.memoryaxis.nirvana.base.action;
 
-import com.memoryaxis.nirvana.base.critical.Critical;
+import com.memoryaxis.nirvana.base.critical.PeopleCritical;
 import com.memoryaxis.nirvana.base.effect.Effect;
 import com.memoryaxis.nirvana.frame.people.People;
 
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface Attack extends Action, Critical {
+public interface Attack extends PeopleAction, PeopleCritical {
 
     @Override
     default Effect action(People attackP, People defendP) {
@@ -31,9 +31,33 @@ public interface Attack extends Action, Critical {
                 .build();
     }
 
-    enum Impl implements Attack, Critical {
+    enum Impl implements Attack, PeopleCritical {
 
         BASE_ATTACK,
+
+        MULTIPLE_ATTACK {
+            @Override
+            public Effect action(People attackP, People defendP) {
+                Integer decreaseHp = new BigDecimal(
+                        attackP.getAtk() * attackP.getMultipleAtkDmg())
+                        .intValue();
+                defendP.decreaseHp(decreaseHp, attackP);
+                return Effect.builder()
+                        .decreaseHp(decreaseHp)
+                        .build();
+            }
+
+            @Override
+            public Effect critical(People attackP, People defendP) {
+                Integer decreaseHp = new BigDecimal(
+                        attackP.getAtk() * attackP.getCriticalDmg() * attackP.getMultipleAtkDmg())
+                        .intValue();
+                defendP.decreaseHp(decreaseHp, attackP);
+                return Effect.builder()
+                        .decreaseHp(decreaseHp)
+                        .build();
+            }
+        },
 
         DOUBLE_ATTACK {
             @Override

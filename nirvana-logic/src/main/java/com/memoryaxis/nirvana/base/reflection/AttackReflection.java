@@ -18,7 +18,6 @@ public interface AttackReflection extends ActionReflection {
 
         @Override
         public void afterAction(People attackP, People defendP, Effect effect) {
-            attackP.setCurrentMp(attackP.getCurrentMp() + attackP.getMpRecovery());
         }
     }
 
@@ -27,7 +26,6 @@ public interface AttackReflection extends ActionReflection {
         LIFE_STEAL(new Default() {
             @Override
             public void afterAction(People attackP, People defendP, Effect effect) {
-                super.afterAction(attackP, defendP, effect);
                 Integer stealHp = new BigDecimal(effect.getDecreaseHp() * attackP.getLifeSteal()).intValue();
                 attackP.increaseHp(stealHp, defendP);
             }
@@ -46,6 +44,7 @@ public interface AttackReflection extends ActionReflection {
 
         @Override
         public void afterAction(People attackP, People defendP, Effect effect) {
+            attackP.setCurrentMp(attackP.getCurrentMp() + attackP.getMpRecovery());
             reflection.afterAction(attackP, defendP, effect);
         }
     }

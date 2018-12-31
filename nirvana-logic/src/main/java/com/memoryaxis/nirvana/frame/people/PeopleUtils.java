@@ -1,6 +1,6 @@
 package com.memoryaxis.nirvana.frame.people;
 
-import com.memoryaxis.nirvana.base.critical.Critical;
+import com.memoryaxis.nirvana.base.critical.PeopleCritical;
 import com.memoryaxis.nirvana.utils.Randoms;
 
 /**
@@ -48,12 +48,12 @@ public class PeopleUtils {
     }
 
     public static boolean haveActionCritical(People people) {
-        return people.getAction() instanceof Critical
+        return people.getAction() instanceof PeopleCritical
                 && haveCriticalChance(people);
     }
 
     public static boolean haveSkillCritical(People people) {
-        return people.getAction() instanceof Critical
+        return people.getAction() instanceof PeopleCritical
                 && haveCriticalChance(people);
     }
 
