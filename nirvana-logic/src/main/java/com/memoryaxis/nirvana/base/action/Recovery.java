@@ -6,7 +6,7 @@ import com.memoryaxis.nirvana.frame.people.People;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface Recovery extends PeopleAction {
+public interface Recovery extends Action {
 
     @Override
     default Effect action(People attackP, People defendP) {

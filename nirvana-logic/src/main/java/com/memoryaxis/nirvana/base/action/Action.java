@@ -6,7 +6,7 @@ import com.memoryaxis.nirvana.frame.people.People;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface PeopleAction {
+public interface Action {
 
     Effect action(People attackP, People defendP);
 }

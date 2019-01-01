@@ -1,13 +1,13 @@
 package com.memoryaxis.nirvana.frame.people;
 
 import com.google.common.collect.Lists;
+import com.memoryaxis.nirvana.base.action.Action;
 import com.memoryaxis.nirvana.base.action.Attack;
-import com.memoryaxis.nirvana.base.action.PeopleAction;
-import com.memoryaxis.nirvana.base.action.TeamAction;
-import com.memoryaxis.nirvana.base.action.TeamAttack;
 import com.memoryaxis.nirvana.base.critical.PeopleCritical;
 import com.memoryaxis.nirvana.base.effect.Effect;
+import com.memoryaxis.nirvana.base.position.ActionTarget;
 import com.memoryaxis.nirvana.base.position.Position;
+import com.memoryaxis.nirvana.base.position.TargetPosition;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
 import com.memoryaxis.nirvana.base.reflection.CriticalReflection;
 import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
@@ -47,16 +47,16 @@ public class People {
     @Builder.Default
     private Integer mpRecovery = 30;
 
-    // action start
+    // getTargetPosition start
     @Builder.Default
-    private PeopleAction action = Attack.Impl.BASE_ATTACK;
-
-    private PeopleAction skill;
+    private Action action = Attack.Impl.BASE_ATTACK;
 
     @Builder.Default
-    private TeamAction teamAction = TeamAttack.Impl.BASE_ATTACK;
+    private ActionTarget actionTarget = ActionTarget.Impl.OPPOSITE_DEFAULT;
 
-    private TeamAction teamSkill;
+    private Action skill;
+
+    private ActionTarget skillTarget;
 
     // critical start
     @Builder.Default
@@ -113,10 +113,29 @@ public class People {
         this.peopleReflectionList.forEach(reflection -> reflection.afterDecreaseHp(this, hp, from));
     }
 
-    public void doTeamAction(Team attackTeam, Team defendTeam, Position currentPosition) {
-        // todo before
-        this.getTeamAction().action(attackTeam, defendTeam, currentPosition);
-        // todo after
+    // todo before
+    // todo after
+    public void doAction(Team attackTeam, Team defendTeam, Position currentPosition) {
+        TargetPosition targetPosition;
+        if (PeopleUtils.haveSkill(this)) {
+            targetPosition = this.skillTarget.getTargetPosition(attackTeam, defendTeam, currentPosition);
+        } else {
+            targetPosition = this.actionTarget.getTargetPosition(attackTeam, defendTeam, currentPosition);
+        }
+
+        List<Position> teammatePositionList = targetPosition.getTeamPositionList();
+        for (Position position : teammatePositionList) {
+            this.doAction(attackTeam.getPeopleMaps().get(position));
+        }
+
+        List<Position> oppositePositionList = targetPosition.getOppositePositionList();
+        for (Position position : oppositePositionList) {
+            People targetPeople = defendTeam.getPeopleMaps().get(position);
+            this.doAction(targetPeople);
+            if (PeopleUtils.isDead(targetPeople)) {
+                defendTeam.getPositionList().remove(position);
+            }
+        }
     }
 
     public void doAction(People defendP) {
@@ -131,7 +150,7 @@ public class People {
                 LOG.debug("critical skill: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
-                PeopleAction action = this.getSkill();
+                Action action = this.getSkill();
                 LOG.debug("skill: " + action);
                 effect = action.action(this, defendP);
             }
@@ -143,12 +162,12 @@ public class People {
                 this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
                 PeopleCritical critical = (PeopleCritical) this.getAction();
                 effect = critical.critical(this, defendP);
-                LOG.debug("critical action: " + critical);
+                LOG.debug("critical getTargetPosition: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
-                PeopleAction action = this.getAction();
+                Action action = this.getAction();
                 effect = action.action(this, defendP);
-                LOG.debug("action: " + action);
+                LOG.debug("getTargetPosition: " + action);
             }
             this.attackReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
         }

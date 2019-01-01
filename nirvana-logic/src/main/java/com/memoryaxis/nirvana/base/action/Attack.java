@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface Attack extends PeopleAction, PeopleCritical {
+public interface Attack extends Action, PeopleCritical {
 
     @Override
     default Effect action(People attackP, People defendP) {

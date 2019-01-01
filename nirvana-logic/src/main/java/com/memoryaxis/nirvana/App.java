@@ -50,6 +50,9 @@ public class App {
                 baw());
 
         Team tw = new Team("WOOD",
+//                buildWood(),
+//                buildWood(),
+//                buildWood(),
                 buildWood(),
                 buildWood(),
                 buildWood());
@@ -57,11 +60,11 @@ public class App {
 //        TeamGame.start(new TeamRound(t1, t2));
 //        TeamGame.start(new TeamRound(t2, t3));
 //        TeamGame.start(new TeamRound(t1, t3));
-        TeamGame.start(new TeamRound(t4, t3));
+//        TeamGame.start(new TeamRound(t4, t3));
 
 //        TeamGame.start(new TeamRound(tw, t1));
 //        TeamGame.start(new TeamRound(tw, t2));
-//        TeamGame.start(new TeamRound(tw, t3));
+        TeamGame.start(new TeamRound(tw, t3));
 //        TeamGame.start(new TeamRound(tw, t4));
     }
 

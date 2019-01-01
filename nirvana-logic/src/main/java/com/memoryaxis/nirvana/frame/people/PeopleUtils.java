@@ -44,6 +44,7 @@ public class PeopleUtils {
      */
     public static boolean haveSkill(People people) {
         return people.getSkill() != null
+                && people.getSkillTarget() != null
                 && people.getCurrentMp() >= MAX_MP;
     }
 
