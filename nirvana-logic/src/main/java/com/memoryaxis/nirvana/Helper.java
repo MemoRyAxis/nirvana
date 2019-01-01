@@ -6,6 +6,7 @@ import com.memoryaxis.nirvana.base.action.Recovery;
 import com.memoryaxis.nirvana.base.position.ActionTarget;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
 import com.memoryaxis.nirvana.base.reflection.PeopleReflection;
+import com.memoryaxis.nirvana.base.reflection.SkillReflection;
 import com.memoryaxis.nirvana.frame.people.People;
 
 /**
@@ -27,9 +28,10 @@ public class Helper {
                 .currentHp(hp)
                 .atk(atk)
 
-                .peopleReflectionList(Lists.newArrayList(PeopleReflection.Impl.REFLECTS))
                 .skill(Recovery.Impl.BASE_RECOVERY)
                 .skillTarget(ActionTarget.Impl.TEAM_SELF)
+
+                .peopleReflectionList(Lists.newArrayList(PeopleReflection.Impl.REFLECTS))
 
                 .build();
     }
@@ -41,7 +43,10 @@ public class Helper {
                 .atk(atk)
 
                 .skill(Attack.Impl.DOUBLE_ATTACK)
+                .skillTarget(ActionTarget.Impl.OPPOSITE_DEFAULT)
+
                 .attackReflectionList(Lists.newArrayList(AttackReflection.Impl.LIFE_STEAL))
+                .skillReflectionList(Lists.newArrayList(SkillReflection.Impl.LIFE_STEAL))
                 .lifeSteal(0.3D)
 
                 .build();
@@ -55,6 +60,7 @@ public class Helper {
 
                 .skill(Attack.Impl.DOUBLE_ATTACK)
                 .skillTarget(ActionTarget.Impl.OPPOSITE_BACK_ROW)
+
                 .criticalChance(0.5D)
                 .criticalDmg(2.5D)
 
@@ -67,8 +73,9 @@ public class Helper {
                 .currentHp(hp)
                 .atk(atk)
 
-                .actionTarget(ActionTarget.Impl.OPPOSITE_ALL)
                 .action(Attack.Impl.MULTIPLE_ATTACK)
+                .actionTarget(ActionTarget.Impl.OPPOSITE_ALL)
+
                 .multipleAtkDmg(0.5)
                 .criticalChance(0.1D)
 
@@ -81,10 +88,10 @@ public class Helper {
                 .currentHp(hp)
                 .atk(atk)
 
-                .actionTarget(ActionTarget.Impl.OPPOSITE_ALL)
-                .action(Attack.Impl.MULTIPLE_ATTACK)
-                .multipleAtkDmg(0.5)
-                .criticalChance(0.1D)
+                .action(Recovery.Impl.BASE_RECOVERY)
+                .actionTarget(ActionTarget.Impl.TEAM_ALL)
+
+                .recoveryEffect(0.3D)
 
                 .build();
     }

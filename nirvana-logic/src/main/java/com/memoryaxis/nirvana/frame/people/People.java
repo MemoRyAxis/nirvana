@@ -45,7 +45,7 @@ public class People {
     private Integer currentMp = 0;
 
     @Builder.Default
-    private Integer mpRecovery = 30;
+    private Integer mpRecovery = 40;
 
     // getTargetPosition start
     @Builder.Default
@@ -72,6 +72,9 @@ public class People {
     // multiple attack dmg
     @Builder.Default
     private Double multipleAtkDmg = 1D;
+
+    @Builder.Default
+    private Double recoveryEffect = 1D;
 
     // reflection start
     @Builder.Default
@@ -113,8 +116,8 @@ public class People {
         this.peopleReflectionList.forEach(reflection -> reflection.afterDecreaseHp(this, hp, from));
     }
 
-    // todo before
-    // todo after
+    // fixme before
+    // fixme after
     public void doAction(Team attackTeam, Team defendTeam, Position currentPosition) {
         TargetPosition targetPosition;
         if (PeopleUtils.haveSkill(this)) {
@@ -125,20 +128,20 @@ public class People {
 
         List<Position> teammatePositionList = targetPosition.getTeamPositionList();
         for (Position position : teammatePositionList) {
-            this.doAction(attackTeam.getPeopleMaps().get(position));
+            this.doAction(attackTeam.getPeopleMaps().get(position), currentPosition, position);
         }
 
         List<Position> oppositePositionList = targetPosition.getOppositePositionList();
         for (Position position : oppositePositionList) {
             People targetPeople = defendTeam.getPeopleMaps().get(position);
-            this.doAction(targetPeople);
+            this.doAction(targetPeople, currentPosition, position);
             if (PeopleUtils.isDead(targetPeople)) {
                 defendTeam.getPositionList().remove(position);
             }
         }
     }
 
-    public void doAction(People defendP) {
+    public void doAction(People defendP, Position currentPosition, Position targetPosition) {
         int oriHp = defendP.getCurrentHp();
         if (PeopleUtils.haveSkill(this)) {
             this.skillReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
@@ -147,11 +150,11 @@ public class People {
                 this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
                 PeopleCritical critical = (PeopleCritical) this.getSkill();
                 effect = critical.critical(this, defendP);
-                LOG.debug("critical skill: " + critical);
+                LOG.debug("[" + currentPosition + "->" + targetPosition + "] critical skill: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
                 Action action = this.getSkill();
-                LOG.debug("skill: " + action);
+                LOG.debug("[" + currentPosition + "->" + targetPosition + "] skill: " + action);
                 effect = action.action(this, defendP);
             }
             this.skillReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
@@ -162,15 +165,15 @@ public class People {
                 this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
                 PeopleCritical critical = (PeopleCritical) this.getAction();
                 effect = critical.critical(this, defendP);
-                LOG.debug("critical getTargetPosition: " + critical);
+                LOG.debug("[" + currentPosition + "->" + targetPosition + "] critical getTargetPosition: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
                 Action action = this.getAction();
                 effect = action.action(this, defendP);
-                LOG.debug("getTargetPosition: " + action);
+                LOG.debug("[" + currentPosition + "->" + targetPosition + "] getTargetPosition: " + action);
             }
             this.attackReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
         }
-        LOG.debug("people decrease HP: " + (oriHp - defendP.getCurrentHp()));
+        LOG.debug("[" + currentPosition + "->" + targetPosition + "] decrease HP: " + (oriHp - defendP.getCurrentHp()));
     }
 }

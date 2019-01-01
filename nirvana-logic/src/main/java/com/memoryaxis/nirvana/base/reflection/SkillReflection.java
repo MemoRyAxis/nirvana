@@ -3,6 +3,8 @@ package com.memoryaxis.nirvana.base.reflection;
 import com.memoryaxis.nirvana.base.effect.Effect;
 import com.memoryaxis.nirvana.frame.people.People;
 
+import java.math.BigDecimal;
+
 /**
  * @author memoryaxis@gmail.com
  */
@@ -20,7 +22,14 @@ public interface SkillReflection extends ActionReflection {
     }
 
     enum Impl implements SkillReflection {
-        BASE(new Default());
+        BASE(new Default()),
+        LIFE_STEAL(new Default() {
+            @Override
+            public void afterAction(People attackP, People defendP, Effect effect) {
+                Integer stealHp = new BigDecimal(effect.getDecreaseHp() * attackP.getLifeSteal()).intValue();
+                attackP.increaseHp(stealHp, defendP);
+            }
+        });
 
         private SkillReflection reflection;
 

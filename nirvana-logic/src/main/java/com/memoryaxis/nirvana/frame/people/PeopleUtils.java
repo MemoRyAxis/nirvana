@@ -19,6 +19,8 @@ public class PeopleUtils {
             return people.getCurrentHp()
                     + "/"
                     + people.getBaseHp()
+                    + "/"
+                    + people.getCurrentMp()
                     + "("
                     + people.getAtk()
                     + ")";

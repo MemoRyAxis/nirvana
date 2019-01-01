@@ -17,9 +17,9 @@ public class LOG {
 
     private static final Logger logicLog = LoggerFactory.getLogger("LOGIC");
 
-    public static final char ATTACK_CHAR = '↓';
+    public static final char DEFEND_CHAR = '↓';
 
-    public static final char DEFEND_CHAR = '↑';
+    public static final char ATTACK_CHAR = '↑';
 
     public static void roundStart(int roundCount) {
         logicLog.info("--- round {} start ---", roundCount);
@@ -33,8 +33,8 @@ public class LOG {
     public static void teamGameEnd(Team attackTeam, Team defendTeam, int roundCount) {
         logicLog.info("");
         logicLog.info("--- round over ({}) ---", roundCount);
-        teamState(attackTeam, true);
         teamState(defendTeam, false);
+        teamState(attackTeam, true);
         logicLog.info("");
         if (attackTeam.getPositionList().size() > defendTeam.getPositionList().size()) {
             logicLog.info("attack team [{}] win!", attackTeam.getName());
@@ -49,18 +49,7 @@ public class LOG {
 
     public static void teamState(Team team, boolean isAttack) {
         if (isAttack) {
-            teamLog.info("{} Team: {}", ATTACK_CHAR, team.getName());
-            teamLog.info("{}: {}, {}: {}, {}: {}",
-                    "BR", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_RIGHT)),
-                    "BM", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_MIDDLE)),
-                    "BL", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_LEFT)));
-            teamLog.info("{}: {}, {}: {}, {}: {}",
-                    "FR", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_RIGHT)),
-                    "FM", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_MIDDLE)),
-                    "FL", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_LEFT)));
             teamLog.info("{}", ATTACK_CHAR);
-        } else {
-            teamLog.info("{}", DEFEND_CHAR);
             teamLog.info("{}: {}, {}: {}, {}: {}",
                     "FL", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_LEFT)),
                     "FM", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_MIDDLE)),
@@ -69,7 +58,18 @@ public class LOG {
                     "BL", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_LEFT)),
                     "BM", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_MIDDLE)),
                     "BR", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_RIGHT)));
-            teamLog.info("{} Team: {}", DEFEND_CHAR, team.getName());
+            teamLog.info("{} Attack Team: {}", ATTACK_CHAR, team.getName());
+        } else {
+            teamLog.info("{} Defend Team: {}", DEFEND_CHAR, team.getName());
+            teamLog.info("{}: {}, {}: {}, {}: {}",
+                    "BR", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_RIGHT)),
+                    "BM", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_MIDDLE)),
+                    "BL", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.BACK_LEFT)));
+            teamLog.info("{}: {}, {}: {}, {}: {}",
+                    "FR", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_RIGHT)),
+                    "FM", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_MIDDLE)),
+                    "FL", PeopleUtils.getPeopleInfo(team.getPeopleMaps().get(Position.FRONT_LEFT)));
+            teamLog.info("{}", DEFEND_CHAR);
         }
     }
 

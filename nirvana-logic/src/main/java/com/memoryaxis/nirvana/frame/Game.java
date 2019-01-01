@@ -23,13 +23,13 @@ public class Game {
             log.debug("attacker: {}", round.getAttacker());
             log.debug("defender: {}", round.getDefender());
 
-            attackPeople.doAction(defendPeople);
+            attackPeople.doAction(defendPeople, null, null);
             if (PeopleUtils.isDead(round.getDefender())) {
                 log.info("defender is dead");
                 break;
             }
 
-            defendPeople.doAction(attackPeople);
+            defendPeople.doAction(attackPeople, null, null);
             if (PeopleUtils.isDead(round.getAttacker())) {
                 log.info("attacker is dead");
                 break;

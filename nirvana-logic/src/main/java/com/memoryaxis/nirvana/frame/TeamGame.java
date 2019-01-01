@@ -25,8 +25,8 @@ public class TeamGame {
 
             LOG.roundStart(currentRoundCount);
 
-            LOG.teamState(attackTeam, true);
             LOG.teamState(defendTeam, false);
+            LOG.teamState(attackTeam, true);
 
             boolean isOneTeamLose = false;
 
