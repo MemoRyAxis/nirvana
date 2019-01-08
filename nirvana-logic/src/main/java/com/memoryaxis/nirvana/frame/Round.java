@@ -1,6 +1,6 @@
 package com.memoryaxis.nirvana.frame;
 
-import com.memoryaxis.nirvana.base.People;
+import com.memoryaxis.nirvana.frame.people.People;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

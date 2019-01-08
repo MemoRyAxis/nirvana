@@ -7,6 +7,9 @@ public enum Rows implements Distance, Order {
     FRONT {
         @Override
         public int getDistance(Distance distance) {
+            if (distance != null && BACK == distance) {
+                return Cols.values().length;
+            }
             return 0;
         }
 
@@ -18,7 +21,10 @@ public enum Rows implements Distance, Order {
     BACK {
         @Override
         public int getDistance(Distance distance) {
-            return Cols.values().length;
+            if (distance != null && BACK == distance) {
+                return Cols.values().length;
+            }
+            return 0;
         }
 
         @Override

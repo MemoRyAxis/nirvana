@@ -1,8 +1,8 @@
 package com.memoryaxis.nirvana.frame;
 
-import com.memoryaxis.nirvana.base.Team;
-import com.memoryaxis.nirvana.base.TeamUtils;
 import com.memoryaxis.nirvana.base.position.Position;
+import com.memoryaxis.nirvana.frame.team.Team;
+import com.memoryaxis.nirvana.frame.team.TeamUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,8 +25,8 @@ public class TeamGame {
 
             LOG.roundStart(currentRoundCount);
 
-            LOG.teamState(attackTeam, true);
             LOG.teamState(defendTeam, false);
+            LOG.teamState(attackTeam, true);
 
             boolean isOneTeamLose = false;
 

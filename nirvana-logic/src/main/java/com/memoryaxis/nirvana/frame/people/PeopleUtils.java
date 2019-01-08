@@ -1,6 +1,6 @@
-package com.memoryaxis.nirvana.base;
+package com.memoryaxis.nirvana.frame.people;
 
-import com.memoryaxis.nirvana.base.critical.Critical;
+import com.memoryaxis.nirvana.base.critical.PeopleCritical;
 import com.memoryaxis.nirvana.utils.Randoms;
 
 /**
@@ -19,6 +19,8 @@ public class PeopleUtils {
             return people.getCurrentHp()
                     + "/"
                     + people.getBaseHp()
+                    + "/"
+                    + people.getCurrentMp()
                     + "("
                     + people.getAtk()
                     + ")";
@@ -44,16 +46,17 @@ public class PeopleUtils {
      */
     public static boolean haveSkill(People people) {
         return people.getSkill() != null
+                && people.getSkillTarget() != null
                 && people.getCurrentMp() >= MAX_MP;
     }
 
     public static boolean haveActionCritical(People people) {
-        return people.getAction() instanceof Critical
+        return people.getAction() instanceof PeopleCritical
                 && haveCriticalChance(people);
     }
 
     public static boolean haveSkillCritical(People people) {
-        return people.getAction() instanceof Critical
+        return people.getAction() instanceof PeopleCritical
                 && haveCriticalChance(people);
     }
 

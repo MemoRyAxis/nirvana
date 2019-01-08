@@ -1,6 +1,6 @@
 package com.memoryaxis.nirvana.base.reflection;
 
-import com.memoryaxis.nirvana.base.People;
+import com.memoryaxis.nirvana.frame.people.People;
 
 import java.math.BigDecimal;
 
@@ -43,7 +43,6 @@ public interface PeopleReflection {
         REFLECTS(new Default() {
             @Override
             public void afterDecreaseHp(People people, Integer hp, People from) {
-                super.afterDecreaseHp(people, hp, from);
                 Integer reflectHp = new BigDecimal(hp * 0.3).intValue();
                 from.decreaseHp(reflectHp, people);
             }

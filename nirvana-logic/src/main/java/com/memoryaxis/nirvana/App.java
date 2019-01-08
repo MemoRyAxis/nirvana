@@ -1,8 +1,6 @@
 package com.memoryaxis.nirvana;
 
 import com.google.common.collect.Lists;
-import com.memoryaxis.nirvana.base.People;
-import com.memoryaxis.nirvana.base.Team;
 import com.memoryaxis.nirvana.base.action.Attack;
 import com.memoryaxis.nirvana.base.action.Recovery;
 import com.memoryaxis.nirvana.base.reflection.AttackReflection;
@@ -11,6 +9,8 @@ import com.memoryaxis.nirvana.frame.Game;
 import com.memoryaxis.nirvana.frame.Round;
 import com.memoryaxis.nirvana.frame.TeamGame;
 import com.memoryaxis.nirvana.frame.TeamRound;
+import com.memoryaxis.nirvana.frame.people.People;
+import com.memoryaxis.nirvana.frame.team.Team;
 
 import static com.memoryaxis.nirvana.Helper.buildWood;
 
@@ -44,8 +44,46 @@ public class App {
                 baa(),
                 baa(),
                 baa());
+        Team t4 = new Team("T4",
+                baw(),
+                baw(),
+                baw());
+
+        Team teamLibra = new Team("Libra",
+                bat(),
+                bas(),
+                bat(),
+                baw(),
+//                baw(),
+                bas(),
+                baf()
+        );
+
+        Team teamLeo = new Team("Leo",
+                bas(),
+//                null,
+                bas(),
+                bas(),
+                bas(),
+                bas(),
+//                null
+                bas()
+        );
+        Team teamLeo2 = new Team("Leo2",
+                bas(),
+//                null,
+                bas(),
+                bas(),
+                bas(),
+                bas(),
+//                null
+                bas()
+        );
 
         Team tw = new Team("WOOD",
+                buildWood(),
+                buildWood(),
+                buildWood(),
                 buildWood(),
                 buildWood(),
                 buildWood());
@@ -53,10 +91,15 @@ public class App {
 //        TeamGame.start(new TeamRound(t1, t2));
 //        TeamGame.start(new TeamRound(t2, t3));
 //        TeamGame.start(new TeamRound(t1, t3));
+//        TeamGame.start(new TeamRound(t4, t3));
 
-        TeamGame.start(new TeamRound(tw, t1));
+//        TeamGame.start(new TeamRound(tw, t1));
 //        TeamGame.start(new TeamRound(tw, t2));
 //        TeamGame.start(new TeamRound(tw, t3));
+//        TeamGame.start(new TeamRound(tw, t4));
+
+        TeamGame.start(new TeamRound(teamLeo, teamLibra));
+//        TeamGame.start(new TeamRound(teamLeo, teamLeo2));
     }
 
     private static People bat() {
@@ -69,6 +112,14 @@ public class App {
 
     private static People baa() {
         return Helper.buildAssassin(130, 30);
+    }
+
+    private static People baw() {
+        return Helper.buildWizard(130, 30);
+    }
+
+    private static People baf() {
+        return Helper.buildWitch(150, 20);
     }
 
     private static void startGame() {
