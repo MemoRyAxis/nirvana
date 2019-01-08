@@ -3,7 +3,7 @@ package com.memoryaxis.nirvana.frame.people;
 import com.google.common.collect.Lists;
 import com.memoryaxis.nirvana.base.action.Action;
 import com.memoryaxis.nirvana.base.action.Attack;
-import com.memoryaxis.nirvana.base.critical.PeopleCritical;
+import com.memoryaxis.nirvana.base.critical.CriticalAction;
 import com.memoryaxis.nirvana.base.effect.Effect;
 import com.memoryaxis.nirvana.base.position.ActionTarget;
 import com.memoryaxis.nirvana.base.position.Position;
@@ -58,7 +58,7 @@ public class People {
 
     private ActionTarget skillTarget;
 
-    // critical start
+    // criticalAction start
     @Builder.Default
     private Double criticalChance = 0D;
 
@@ -148,9 +148,9 @@ public class People {
             Effect effect;
             if (PeopleUtils.haveSkillCritical(this)) {
                 this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
-                PeopleCritical critical = (PeopleCritical) this.getSkill();
-                effect = critical.critical(this, defendP);
-                LOG.debug("[" + currentPosition + "->" + targetPosition + "] critical skill: " + critical);
+                CriticalAction critical = (CriticalAction) this.getSkill();
+                effect = critical.criticalAction(this, defendP);
+                LOG.debug("[" + currentPosition + "->" + targetPosition + "] criticalAction skill: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
                 Action action = this.getSkill();
@@ -163,9 +163,9 @@ public class People {
             this.attackReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
             if (PeopleUtils.haveActionCritical(this)) {
                 this.criticalReflectionList.forEach(reflection -> reflection.beforeAction(this, defendP));
-                PeopleCritical critical = (PeopleCritical) this.getAction();
-                effect = critical.critical(this, defendP);
-                LOG.debug("[" + currentPosition + "->" + targetPosition + "] critical getTargetPosition: " + critical);
+                CriticalAction critical = (CriticalAction) this.getAction();
+                effect = critical.criticalAction(this, defendP);
+                LOG.debug("[" + currentPosition + "->" + targetPosition + "] criticalAction getTargetPosition: " + critical);
                 this.criticalReflectionList.forEach(reflection -> reflection.afterAction(this, defendP, effect));
             } else {
                 Action action = this.getAction();

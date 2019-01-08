@@ -1,6 +1,6 @@
 package com.memoryaxis.nirvana.base.action;
 
-import com.memoryaxis.nirvana.base.critical.PeopleCritical;
+import com.memoryaxis.nirvana.base.critical.CriticalAction;
 import com.memoryaxis.nirvana.base.effect.Effect;
 import com.memoryaxis.nirvana.frame.people.People;
 
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * @author memoryaxis@gmail.com
  */
-public interface Attack extends Action, PeopleCritical {
+public interface Attack extends Action, CriticalAction {
 
     @Override
     default Effect action(People attackP, People defendP) {
@@ -21,7 +21,7 @@ public interface Attack extends Action, PeopleCritical {
     }
 
     @Override
-    default Effect critical(People attackP, People defendP) {
+    default Effect criticalAction(People attackP, People defendP) {
         Integer decreaseHp = new BigDecimal(
                 attackP.getAtk() * attackP.getCriticalDmg())
                 .intValue();
@@ -31,7 +31,7 @@ public interface Attack extends Action, PeopleCritical {
                 .build();
     }
 
-    enum Impl implements Attack, PeopleCritical {
+    enum Impl implements Attack, CriticalAction {
 
         BASE_ATTACK,
 
@@ -48,7 +48,7 @@ public interface Attack extends Action, PeopleCritical {
             }
 
             @Override
-            public Effect critical(People attackP, People defendP) {
+            public Effect criticalAction(People attackP, People defendP) {
                 Integer decreaseHp = new BigDecimal(
                         attackP.getAtk() * attackP.getCriticalDmg() * attackP.getMultipleAtkDmg())
                         .intValue();
@@ -70,7 +70,7 @@ public interface Attack extends Action, PeopleCritical {
             }
 
             @Override
-            public Effect critical(People attackP, People defendP) {
+            public Effect criticalAction(People attackP, People defendP) {
                 Integer decreaseHp = new BigDecimal(
                         attackP.getAtk() * attackP.getCriticalDmg() * 2)
                         .intValue();
